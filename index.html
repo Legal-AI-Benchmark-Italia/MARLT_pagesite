@@ -1,47 +1,1201 @@
-document.addEventListener('DOMContentLoaded', () => {
+<!DOCTYPE html>
+<html lang="it" style="scroll-behavior: smooth;"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LAIBIT & MERL-T: Intelligenza artificiale avanzata per un diritto trasparente, affidabile e democratico in Italia, con pipeline interattiva.">
+    <meta name="keywords" content="intelligenza artificiale, diritto italiano, AI legale, LAIBIT, MERL-T, trasparenza, RLCF, knowledge graph, PA, giustizia digitale, innovazione legale, pipeline AI">
 
-    // Inizializza Animate On Scroll (AOS)
-    AOS.init({
-        duration: 800, // Durata animazione
-        once: true, // Anima solo una volta
-        offset: 50, // Offset (in px) prima che l'animazione inizi
-    });
+    <title>LAIBIT & MERL-T | Pipeline AI per il Diritto Trasparente</title>
 
-    // Navbar cambia stile allo scroll
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) { // Cambia dopo 50px di scroll
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- Variabili CSS --- */
+        :root {
+            --primary-color: #004080; /* Blu istituzionale più deciso */
+            --secondary-color: #007bff; /* Blu più brillante per accenti/bottoni */
+            --light-bg: #f8f9fa; /* Sfondo chiaro per sezioni alternate */
+            --dark-text: #212529;
+            --medium-text: #495057;
+            --light-text: #f8f9fa;
+            --white-color: #ffffff;
+            --border-color: #dee2e6;
+            --header-font: 'Montserrat', sans-serif;
+            --body-font: 'Open Sans', sans-serif;
+            --navbar-height: 70px; /* Altezza navbar per offset scroll */
         }
-    });
 
-    // Gestione Menu Hamburger (Mobile)
-    const hamburger = document.getElementById('hamburger-menu');
-    const navMenu = document.querySelector('.nav-menu');
+        /* --- Reset e Stili Globali --- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+        html {
+            scroll-padding-top: var(--navbar-height); /* Offset per link interni causa navbar fissa */
+            scroll-behavior: smooth; /* Scroll fluido */
+        }
 
-    // Chiudi il menu mobile quando si clicca un link (opzionale ma buona UX)
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+        body {
+            font-family: var(--body-font);
+            line-height: 1.7;
+            color: var(--dark-text);
+            background-color: var(--white-color);
+            overflow-x: hidden; /* Previene scroll orizzontale */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--header-font);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        h1 { font-size: clamp(2rem, 5vw, 3rem); } /* Dimensione fluida */
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2.5rem; }
+        h3 { font-size: clamp(1.3rem, 3vw, 1.7rem); color: var(--secondary-color); }
+        h4 { font-size: clamp(1.1rem, 2.5vw, 1.3rem); color: var(--primary-color); }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--medium-text);
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        img, .visual-placeholder {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .bg-light {
+            background-color: var(--light-bg);
+        }
+
+        .text-center { text-align: center; }
+        .centered-text { text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .section-intro { text-align: center; max-width: 750px; margin: 0 auto 2.5rem auto; font-size: 1.1em; color: var(--dark-text); }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: var(--navbar-height);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--white-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-logo {
+            font-family: var(--header-font);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .nav-logo:hover { text-decoration: none; color: var(--secondary-color); }
+
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-menu a {
+            color: var(--dark-text);
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after { /* Aggiungere classe 'active' con JS se si vuole evidenziare sezione corrente */
+            width: 100%;
+        }
+        .nav-menu a:hover {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+
+        /* Hamburger Menu (per mobile) */
+        .hamburger {
+            display: none; /* Mostra solo su mobile */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 5px 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        /* --- Hero Section --- */
+        #hero {
+            height: 90vh; /* Altezza quasi a schermo intero */
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            color: var(--white-color);
+            /* ** IMMAGINE DI SFONDO DA METTERE QUI ** */
+            background: url('hero-background.jpg') no-repeat center center/cover; /* <-- SOSTITUISCI 'hero-background.jpg' */
+            /* Alternativa: Gradiente */
+            /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 30, 60, 0.6); /* Overlay scuro per leggibilità */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        #hero h1 {
+            color: var(--white-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        #hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-family: var(--header-font);
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 50px; /* Bottone arrotondato */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+            text-decoration: none;
+        }
+        .btn:hover { text-decoration: none; }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            border-color: var(--secondary-color);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border-color: var(--primary-color);
+        }
+        .btn-secondary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
+        #contatti .btn-outline { /* Stile specifico per CTA section */
+            color: var(--white-color);
+            border-color: var(--white-color);
+        }
+        #contatti .btn-outline:hover {
+             background-color: var(--white-color);
+            color: var(--primary-color);
+        }
+
+
+        /* --- Sezioni Contenuto --- */
+        .content-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+
+        .content-columns.reversed-columns .column-visual { order: -1; } /* Inverte ordine colonne */
+
+        .column-text { padding-right: 20px; }
+        .column-visual { padding-left: 20px; }
+
+        .visual-placeholder {
+            min-height: 300px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #6c757d;
+            background-size: cover;
+            background-position: center;
+            /* ** IMMAGINE PER IL METODO DA METTERE QUI ** */
+            /* Esempio: background-image: url('placeholder-metodo.png'); */ /* <-- SOSTITUISCI */
+        }
+
+        /* Feature Grid (Sezione Soluzione) */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--white-color);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon-placeholder { /* Stile per il placeholder icona */
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex; /* Centra eventuale contenuto (es. testo placeholder) */
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 1.5rem;
+            /* Se usi Font Awesome, rimuovi questo e usa <i class="..."></i> nel HTML */
+        }
+        .feature-card h3 { margin-bottom: 1rem; }
+        .feature-card p { font-size: 0.95em; }
+
+
+        /* Importance Grid (Sezione Importanza) */
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 3rem 0;
+        }
+
+        .importance-item {
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px 20px 20px 25px;
+            background-color: var(--white-color);
+            border-radius: 0 5px 5px 0;
+             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .importance-item h4 { margin-bottom: 0.5rem; }
+
+        /* --- Pipeline Section --- */
+        #pipeline {
+            background-color: var(--white-color); /* Sfondo bianco per la pipeline */
+        }
+        .pipeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Spazio tra freccia e blocco */
+            max-width: 700px; /* Larghezza massima per leggibilità */
+            margin: 0 auto;
+        }
+        .pipeline-stage {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease;
+        }
+         .pipeline-stage:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+         }
+
+        .pipeline-stage h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .pipeline-arrow {
+            font-size: 2em;
+            color: var(--secondary-color);
+            line-height: 1;
+            margin: 5px 0; /* Aggiusta spazio verticale freccia */
+        }
+
+        .details-btn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 10px; /* Spazio sopra il bottone */
+        }
+        .details-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none; /* Nascosto di default */
+            position: fixed; /* Rimane fisso durante lo scroll */
+            z-index: 1001; /* Sopra tutto il resto tranne forse la navbar se ha z-index più alto */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Abilita scroll se il contenuto è troppo lungo */
+            background-color: rgba(0,0,0,0.6); /* Sfondo semi-trasparente */
+            padding-top: 60px; /* Spazio dall'alto */
+             opacity: 0; /* Start hidden for fade-in */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.show {
+            display: block;
+             opacity: 1;
+        }
+
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 5% dall'alto e centrato */
+            padding: 30px 40px;
+            border: 1px solid #ddd;
+            width: 85%; /* Larghezza del modale */
+            max-width: 800px; /* Massima larghezza */
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 85vh; /* Limita altezza massima */
+            overflow-y: auto; /* Scroll verticale interno se necessario */
+        }
+         .modal-content h3 { /* Titolo all'interno del modale */
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+         }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute; /* Posiziona relativo a modal-content */
+            top: 15px;
+            right: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+
+        /* Stile per testo preformattato (es. schema KG) nel modale */
+        .modal-content pre {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap; /* Va a capo se necessario */
+            word-wrap: break-word; /* Rompe parole lunghe */
+            max-height: 400px; /* Limita altezza blocco pre */
+            overflow-y: auto; /* Scroll interno se supera altezza */
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* --- Allegati Section --- */
+        .allegati-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+        }
+        .allegati-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        details {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+        }
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        summary:hover {
+            color: var(--secondary-color);
+        }
+        details[open] summary {
+             margin-bottom: 10px;
+        }
+        details ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 10px;
+             font-size: 0.95em;
+        }
+         details li {
+             margin-bottom: 5px;
+         }
+
+        /* --- Call to Action Section --- */
+        .section-cta {
+            background: linear-gradient(135deg, var(--primary-color), #0056b3); /* Gradiente scuro */
+            color: var(--light-text);
+        }
+        .section-cta h2, .section-cta h3 { color: var(--white-color); }
+        .section-cta p { color: rgba(255, 255, 255, 0.9); }
+
+        .cta-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 3rem;
+            display: inline-block; /* Per centrare se section è text-center */
+            max-width: 700px;
+        }
+        .cta-box p { margin-bottom: 1.5rem; }
+        .cta-box .btn { margin: 10px; }
+
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--dark-text);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        footer a:hover {
+            color: var(--white-color);
+        }
+
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .container { max-width: 960px; }
+            .content-columns { grid-template-columns: 1fr; gap: 20px; } /* Stack colonne */
+            .content-columns.reversed-columns .column-visual { order: 0; } /* Reset ordine */
+            .column-text, .column-visual { padding: 0; }
+            .column-visual { margin-bottom: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --navbar-height: 60px; }
+            .section-padding { padding: 60px 0; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.6rem; margin-bottom: 1.5rem;}
+            h3 { font-size: 1.2rem; }
+
+            /* Navbar mobile */
+            .nav-menu {
+                display: none; /* Nascondi menu desktop */
+                position: absolute;
+                top: var(--navbar-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--white-color);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                gap: 0;
             }
+             .nav-menu.active { display: flex; } /* Mostra quando attivo */
+
+            .nav-menu li { width: 100%; text-align: center; }
+            .nav-menu a {
+                padding: 15px 0;
+                display: block;
+                width: 100%;
+            }
+             .nav-menu a::after { display: none; } /* Nascondi effetto linea */
+
+            .hamburger { display: block; /* Mostra hamburger */ }
+
+            /* Hero section più piccola */
+            #hero { height: 70vh; min-height: 400px; }
+
+            /* Colonne sempre stackate */
+             .content-columns { grid-template-columns: 1fr; }
+
+            /* Modal su mobile */
+            .modal-content { width: 95%; margin: 10% auto; padding: 20px; max-height: 90vh;}
+            .close-btn { top: 5px; right: 15px; font-size: 28px;}
+
+             /* Pipeline su mobile */
+            .pipeline-stage { padding: 20px; }
+             .pipeline-stage h3 { font-size: 1.1em; }
+             .details-btn { padding: 6px 12px; font-size: 0.85em; }
+        }
+
+        @media (max-width: 576px) {
+            .btn { padding: 10px 20px; font-size: 0.9rem; }
+            .cta-box { padding: 30px; }
+        }
+
+        /* Stili per Hamburger attivo (JS aggiunge/rimuove la classe 'active') */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+    </style>
+    </head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">LAIBIT & MERL-T</a>
+            <ul class="nav-menu">
+                <li><a href="#sfida">La Sfida</a></li>
+                <li><a href="#soluzione">Soluzione</a></li>
+                 <li><a href="#pipeline">Pipeline</a></li> <li><a href="#metodo">Metodo</a></li>
+                <li><a href="#importanza">Perché Noi</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="hero-content container" data-aos="fade-in" data-aos-delay="200">
+            <h1>Intelligenza Artificiale per un Diritto Trasparente, Affidabile e Democratico</h1>
+            <p class="subtitle">LAIBIT & MERL-T: Rigore scientifico e validazione comunitaria per innovare il sistema giuridico italiano.</p>
+            <a href="#soluzione" class="btn btn-primary">Scopri di più</a>
+        </div>
+        <div class="hero-overlay"></div> </header>
+
+    <main>
+        <section id="sfida" class="section-padding">
+            <div class="container">
+                <h2 data-aos="fade-up">La Complessità Giuridica nell'Era Digitale: Una Sfida Istituzionale</h2>
+                <div class="content-columns" data-aos="fade-up" data-aos-delay="100">
+                    <p>Il sistema giuridico è un pilastro democratico, ma la sua complessità e la rapida evoluzione normativa rendono difficile l'accesso e l'applicazione del diritto. Questo impatta non solo i professionisti, ma anche le istituzioni e la loro capacità di garantire giustizia ed efficienza.</p>
+                    <p>Gli attuali strumenti digitali spesso mancano della specializzazione, affidabilità e trasparenza necessarie per il delicato dominio legale, limitando il potenziale di una vera innovazione al servizio del cittadino e delle istituzioni.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="soluzione" class="section-padding bg-light">
+            <div class="container">
+                <h2 data-aos="fade-up">LAIBIT & MERL-T: Risposta Rigorosa e Collaborativa</h2>
+                <p class="section-intro" data-aos="fade-up" data-aos-delay="100"><strong>LAIBIT</strong> è la community scientifica che guida lo sviluppo di AI etica per il diritto italiano. <strong>MERL-T</strong> è il framework AI risultante, progettato per il nostro ordinamento.</p>
+                <div class="feature-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon-placeholder"></div>
+                        <h3>Distinzione Principi/Regole</h3>
+                        <p>Combina moduli esperti sui fondamenti (Costituzione, Corti Superiori) e sull'applicazione normativa/giurisprudenziale specifica.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                         <div class="feature-icon-placeholder"></div>
+                        <h3>Orchestrazione Controllata</h3>
+                        <p>Un Router e Sintetizzatore MoE, addestrati e validati dalla community, guidano l'analisi e la generazione delle risposte in modo trasparente.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                         <div class="feature-icon-placeholder"></div>
+                        <h3>Contesto Affidabile</h3>
+                        <p>Integra Vector DB, API normative (VisuaLexAPI) e un Knowledge Graph (KG) centrale con tecniche GraphRAG avanzate.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pipeline" class="section-padding">
+            <div class="container">
+                <h2 data-aos="fade-up">Pipeline Interattiva MERL-T</h2>
+                 <p class="section-intro" data-aos="fade-up" data-aos-delay="100">Esplora il flusso di elaborazione di una query nel framework MERL-T. Clicca su "Dettagli" per approfondire ogni fase.</p>
+
+                <div class="pipeline-container">
+                    <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>1. Pre-processing e NER</h3>
+                        <p>Normalizzazione testo e riconoscimento entità giuridiche.</p>
+                        <button class="details-btn" data-target="modal-stage-1">Dettagli</button>
+                    </div>
+                    <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                    <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>2. Routing della Query (Router MoE)</h3>
+                        <p>Instradamento intelligente della query basato su RLCF.</p>
+                        <button class="details-btn" data-target="modal-stage-2">Dettagli</button>
+                    </div>
+                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                    <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>3. Context Augmentation (Recupero)</h3>
+                        <p>Recupero informazioni da Vector DB, KG e API (GraphRAG).</p>
+                        <button class="details-btn" data-target="modal-stage-3">Dettagli</button>
+                    </div>
+                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                     <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>4. Costruzione Prompt LLM</h3>
+                         <p>Assemblaggio prompt specifici per moduli Principi e Regole.</p>
+                        <button class="details-btn" data-target="modal-stage-4">Dettagli</button>
+                    </div>
+                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                     <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>5. Inferenza LLM (Moduli Esperti)</h3>
+                         <p>Esecuzione moduli LLM Principi e/o Regole.</p>
+                        <button class="details-btn" data-target="modal-stage-5">Dettagli</button>
+                    </div>
+                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                     <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>6. Sintesi Risposte (Sintetizzatore MoE)</h3>
+                        <p>Combinazione intelligente delle risposte basata su RLCF.</p>
+                        <button class="details-btn" data-target="modal-stage-6">Dettagli</button>
+                    </div>
+                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+
+                    <div class="pipeline-stage" data-aos="fade-up">
+                        <h3>7. Post-processing e Output</h3>
+                         <p>Formattazione finale, tracciamento fonti e filtri qualità.</p>
+                        <button class="details-btn" data-target="modal-stage-7">Dettagli</button>
+                    </div>
+                </div>
+
+                 <div class="allegati-section" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Allegati alla Pipeline</h3>
+                    <details>
+                        <summary>Allegato I - Materie Fondamentali</summary>
+                        <ul>
+                            <li>Diritto civile ed elementi fondamentali di diritto romano.</li>
+                            <li>Procedura civile.</li>
+                            <li>Diritto penale.</li>
+                            <li>Procedura penale.</li>
+                            <li>Diritto amministrativo.</li>
+                            <li>Diritto costituzionale.</li>
+                            <li>Diritto tributario.</li>
+                            <li>Diritto commerciale e fallimentare.</li>
+                            <li>Diritto del lavoro e della previdenza sociale.</li>
+                            <li>Diritto comunitario.</li>
+                            <li>Diritto internazionale pubblico e privato.</li>
+                            <li>Diritto della protezione dei dati.</li>
+                            <li>Diritto comparato pubblico e privato.</li>
+                            <li>Elementi di informatica giuridica e di ordinamento giudiziario.</li>
+                        </ul>
+                    </details>
+                    <details>
+                         <summary>Allegato II - Norme Principali (Estratto)</summary>
+                         <ul>
+                            <li>Costituzione</li>
+                            <li>Codice penale (R.D. 19 ottobre 1930, n. 1398)</li>
+                            <li>Codice di procedura civile (R.D. 28 ottobre 1940, n. 1443)</li>
+                            <li>Codice civile (R.D. 16 marzo 1942, n. 262)</li>
+                            <li>Codice della navigazione</li>
+                            <li>Codice di procedura penale (D.P.R. 22 settembre 1988, n. 447)</li>
+                            <li>Codice della strada (D.lgs. 30 aprile 1992, n. 285)</li>
+                            <li>Codice del processo tributario (D.lgs. 31 dicembre 1992, n. 546)</li>
+                            <li>Codice in materia di protezione dei dati personali (Codice della privacy) (D.lgs. 30 giugno 2003, n. 196)</li>
+                            <li>Codice delle comunicazioni elettroniche (D.lgs. 1 agosto 2003, n. 259)</li>
+                            <li>Codice dei beni culturali e del paesaggio (D.lgs. 22 gennaio 2004, n. 42)</li>
+                            <li>Codice della proprietà industriale (D.lgs. 10 febbraio 2005, n. 30)</li>
+                            <li>Codice dell'amministrazione digitale (D.lgs. 7 marzo 2005, n. 82)</li>
+                             <li>Codice del consumo (D.lgs. 6 settembre 2005, n. 206)</li>
+                             <li>Codice delle assicurazioni private (D.lgs. 7 settembre 2005, n. 209)</li>
+                             <li>Codice dell'ambiente (D.lgs. 3 aprile 2006, n. 152)</li>
+                             <li>Codice dei contratti pubblici (D.lgs. 31 marzo 2023, n. 36)</li>
+                             <li>Codice dell'ordinamento militare (D.lgs. 15 marzo 2010, n. 66)</li>
+                             <li>Codice del processo amministrativo (D.lgs. 2 luglio 2010, n. 104)</li>
+                              <li>Codice antimafia (D.lgs. 6 settembre 2011, n. 159)</li>
+                              <li>Codice di giustizia contabile (D.lgs. 26 agosto 2016, n. 174)</li>
+                              <li>Codice del Terzo settore (D.lgs. 3 luglio 2017, n. 117)</li>
+                              <li>Codice della crisi d'impresa e dell'insolvenza (D.lgs. 12 gennaio 2019, n. 14)</li>
+                              <li>Regolamento generale sulla protezione dei dati (Reg. UE 27 aprile 2016, n. 679)</li>
+                            <li>Legge sul procedimento amministrativo (L. 7 agosto 1990, n. 241)</li>
+                            <li>Responsabilità amministrativa delle persone giuridiche (D.lgs. 8 giugno 2001, n. 231)</li>
+                             <li>Testo unico sul pubblico impiego (D.lgs. 30 marzo 2001, n. 165)</li>
+                             <li>Testo unico degli enti locali (D.lgs. 18 agosto 2000, n. 267)</li>
+                             <li>Testo unico bancario (D.lgs. 1 settembre 1993, n. 385)</li>
+                             <li>Testo unico edilizia (D.P.R. 6 giugno 2001, n. 380)</li>
+                             <li>Testo unico sull'immigrazione (D.lgs. 25 luglio 1998, n. 286)</li>
+                              <li>Testo unico stupefacenti (D.P.R. 9 ottobre 1990, n. 309)</li>
+                              <li>Testo unico sulla sicurezza sul lavoro (D.lgs. 9 aprile 2008, n. 81)</li>
+                             <li>Statuto del contribuente (L. 27 luglio 2000, n. 212)</li>
+                             <li>... (Vedi testo completo per l'elenco esaustivo)</li>
+                         </ul>
+                     </details>
+                 </div>
+            </div>
+        </section>
+        <section id="metodo" class="section-padding bg-light"> <div class="container">
+                 <h2 data-aos="fade-up">Il Metodo LAIBIT: Validazione e Trasparenza (RLCF)</h2>
+                 <p class="section-intro" data-aos="fade-up" data-aos-delay="100">L'affidabilità di MERL-T si basa sull'<strong>Apprendimento Rinforzato dal Feedback della Comunità (RLCF)</strong>, un processo trasparente e innovativo.</p>
+                 <div class="content-columns reversed-columns"> <div class="column-text" data-aos="fade-left" data-aos-delay="200">
+                        <h3>Validazione Esperta Continua</h3>
+                        <p>Esperti giuridici qualificati della community LAIBIT affinano e validano costantemente le capacità del sistema tramite feedback strutturato.</p>
+                        <h3>Knowledge Graph: Bene Comune</h3>
+                        <p>Il KG centrale mappa concetti e relazioni giuridiche. È un patrimonio pubblico dinamico, che evolve con la validazione della comunità, garantendo tracciabilità.</p>
+                        <h3>Una Nuova <em>Disputatio</em> Digitale</h3>
+                        <p>Questo approccio promuove una revisione scientifica continua, allineando l'AI all'interpretazione giuridica consolidata e validata.</p>
+                     </div>
+                     <div class="column-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="visual-placeholder" style="background-image: url('placeholder-metodo.png');"> Metodo Visivo</div> </div>
+                 </div>
+            </div>
+        </section>
+
+         <section id="importanza" class="section-padding"> <div class="container">
+                <h2 data-aos="fade-up">Una Necessità Strategica, Non Solo un'Opportunità</h2>
+                <p class="section-intro" data-aos="fade-up" data-aos-delay="100">Adottare AI nel settore legale/pubblico richiede responsabilità. L'approccio LAIBIT risponde a esigenze cruciali:</p>
+                <div class="importance-grid">
+                    <div class="importance-item" data-aos="zoom-in" data-aos-delay="200">
+                        <h4>Responsabilità Scientifica</h4>
+                        <p>Promuovere strumenti rigorosi, accurati e accessibili per l'avanzamento della scienza giuridica digitale.</p>
+                    </div>
+                     <div class="importance-item" data-aos="zoom-in" data-aos-delay="300">
+                        <h4>Necessità Democratica</h4>
+                        <p>Garantire AI trasparente e controllabile per la PA e la giustizia, al servizio dei cittadini e dei principi costituzionali.</p>
+                    </div>
+                     <div class="importance-item" data-aos="zoom-in" data-aos-delay="400">
+                        <h4>Evitare l'Arretramento</h4>
+                        <p>Colmare il divario con l'innovazione privata, mantenendo l'efficienza pubblica e la capacità di governare la complessità.</p>
+                    </div>
+                </div>
+                <p class="centered-text" data-aos="fade-up" data-aos-delay="200">L'ecosistema LAIBIT, con il suo nucleo pubblico e architettura aperta, offre benefici a professionisti, accademici, studenti, editori, imprese tech e cittadini.</p>
+            </div>
+        </section>
+
+        <section id="contatti" class="section-padding section-cta">
+            <div class="container text-center" data-aos="fade-up">
+                <h2>Un Impegno Collettivo per il Futuro del Diritto</h2>
+                <p>LAIBIT è un invito a partecipare alla costruzione di un'AI giuridica al servizio della società. Contribuire significa garantire rigore, creare un bene comune digitale e assicurare che l'innovazione rispetti i nostri valori fondamentali.</p>
+                <p><strong>Il futuro del diritto richiede visione, rigore e collaborazione.</strong></p>
+                <div class="cta-box" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Entra a far parte della Community</h3>
+                    <p>Siamo alla ricerca di istituzioni, professionisti, accademici e sviluppatori interessati a contribuire.</p>
+                    <a href="mailto:contatti@laibit-merlt.it?subject=Richiesta Informazioni Progetto LAIBIT & MERL-T" class="btn btn-secondary">Contattaci</a>
+                    <a href="[LINK AL TUO GITHUB REPO/DOCUMENTAZIONE]" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Scopri la Documentazione</a> </div>
+            </div>
+        </section>
+    </main>
+
+     <div id="modal-stage-1" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-1">&times;</span>
+            <h3>1. Pre-processing e Named Entity Recognition (NER)</h3>
+            <p><strong>Input:</strong> <code>query_utente</code> (Stringa): testo della domanda posta dall'utente in lingua italiana.</p>
+            <h4>1.1. Normalizzazione testo:</h4>
+            <p>La <code>query_utente</code> viene normalizzata: conversione a lowercase, rimozione caratteri speciali, standardizzazione abbreviazioni e riferimenti canonici.</p>
+            <h4>1.2. Named Entity Recognition (NER) giuridico:</h4>
+            <p>Un modello NER specializzato analizza la query normalizzata estraendo:</p>
+            <ul>
+                <li>ENTITA_CONCETTO</li>
+                <li>ENTITA_NORMA</li>
+                <li>ENTITA_SENTENZA</li>
+            </ul>
+             <p>con i relativi identificatori strutturati.</p>
+            <p><strong>Output della fase:</strong> <code>query_normalizzata</code> (Stringa), <code>lista_entita_estratte</code> (Lista di tuple).</p>
+        </div>
+    </div>
+
+     <div id="modal-stage-2" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-2">&times;</span>
+            <h3>2. Routing della query (Router MoE Addestrabile)</h3>
+            <h4>2.1. Analisi input:</h4>
+             <p>Il Router MoE Addestrabile (un modello "gating" dedicato) riceve <code>query_normalizzata</code> e <code>lista_entita_estratte</code>.</p>
+            <h4>2.2. Logica di instradamento appresa:</h4>
+            <p>Il modello Router, addestrato tramite Reinforcement Learning from Community Feedback (RLCF), su dati validati da esperti giuridici, predice l'execution plan più appropriato.</p>
+            <p>Il modello valuta le caratteristiche della query e delle entità per determinare se attivare Modulo Principi, Modulo Regole o una loro combinazione. I pesi di questo modello rappresentano parte del patrimonio intellettuale collettivo di LAIBIT.</p>
+             <h4>2.3. Definizione execution plan:</h4>
+             <p>Il Router MoE seleziona uno dei piani possibili:</p>
+             <ul>
+                <li>Piano A: solo Modulo Principi.</li>
+                <li>Piano B: solo Modulo Regole.</li>
+                <li>Piano C: combinazione Modulo Principi + Modulo Regole.</li>
+             </ul>
+             <p><strong>Output della fase:</strong> <code>execution_plan</code> (Oggetto che definisce moduli e sequenza).</p>
+        </div>
+    </div>
+
+     <div id="modal-stage-3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-3">&times;</span>
+            <h3>3. Context Augmentation (Recupero Informazioni)</h3>
+             <p>Questa fase avviene in parallelo o sequenza in base all'<code>execution_plan</code>. Si ispira a tecniche di GraphRAG (cfr. Guo et al., "LightRAG", arXiv:2410.05779).</p>
+
+             <h4>3.1. Recupero da database vettoriale (se <code>execution_plan</code> include Modulo Regole):</h4>
+            <ul>
+                <li>Calcolo embedding query e ricerca ANN su DB Vettoriale (Milvus/FAISS).</li>
+                <li>Contenuto DB Vettoriale: Componente personalizzabile/estensibile contenente di base: Codici principali italiani (con commenti open-source), manuali universitari per materie fondamentali (vedi Allegato I), massime giurisprudenziali delle corti interne (Cassazione, CdS, CdC, TAR rilevanti). Norme principali URN (vedi Allegato II).</li>
+                <li>Recupero top_K documenti (<code>documenti_vettoriali</code>).</li>
+            </ul>
+
+             <h4>3.2. Recupero da Knowledge Graph (se previsto dall’<code>execution_plan</code>):</h4>
+            <ul>
+                <li>Utilizzo di <code>ENTITA_CONCETTO</code> per interrogare il Knowledge Graph (Neo4j).</li>
+                 <li><strong>KG come core asset:</strong> questo grafo rappresenta il patrimonio intellettuale collettivo per eccellenza, strutturato secondo uno schema definito che evolve dinamicamente grazie al processo RLCF e al contributo della community LAIBIT. La sua manutenzione e il suo arricchimento sono un'attività chiave della community, per assicurarne l’accuratezza e la sicurezza.</li>
+            </ul>
+            <h5>Schema KG Proposto:</h5>
+            <details>
+                <summary>A. Tipologie di Nodi</summary>
+                <pre>
+1. Norma
+   Descrizione: rappresenta atti normativi specifici...
+   Proprietà: node_id, estremi, fonte, titolo, descrizione, data_pubblicazione, data_entrata_in_vigore, data_abrogazione, ambito_di_applicazione, URN, revisioni_costituzionali.
+
+2. Concetto Giuridico
+   Descrizione: rappresenta idee astratte o principi giuridici...
+   Proprietà: node_id, nome, definizione, ambito.
+
+3. Soggetto Giuridico
+   Descrizione: Entità cui si applica il diritto...
+   Proprietà: node_id, nome, tipo, ruolo, qualifiche.
+
+4. Atto Giudiziario / Provvedimento
+   Descrizione: decisioni giurisprudenziali o atti amministrativi...
+   Proprietà: node_id, estremi, descrizione, organo_emittente, data, tipologia, materia, URN.
+
+6. Dottrina / Commentario (NB: Numero 5 mancante nel testo originale)
+   Descrizione: Testi e opinioni dottrinali...
+   Proprietà: node_id, titolo, autore, descrizione, data_pubblicazione, fonte.
+
+7. Procedura / Processo
+   Descrizione: Sequenze di atti regolati dalla norma...
+   Proprietà: node_id, nome, descrizione, ambito, tipologia.
+                </pre>
+             </details>
+            <details>
+                <summary>B. Tipologie di Relazioni</summary>
+                 <pre>
+1.  disciplina (Norma → Concetto)
+2.  applica_a (Norma → Soggetto)
+3.  interpreta (Atto Giudiziario → Norma)
+4.  commenta (Dottrina → Norma)
+5.  cita (Nodo → Nodo)
+6.  deroga_a / modifica (Norma → Norma)
+7.  relazione_concettuale (Concetto → Concetto)
+8.  emesso_da (Atto → Organo)
+9.  fonte (Norma → Fonte Diritto)
+10. prevede (Norma → Procedura)
+11. riguarda (Atto → Soggetto)
+                </pre>
+             </details>
+             <p>Recupero informazioni strutturate (<code>triplette_kg</code>).</p>
+
+            <h4>3.3. Recupero dinamico via API (se <code>execution_plan</code> include Modulo Regole e NER ha estratto <code>ENTITA_NORMA</code> o <code>ENTITA_SENTENZA</code> interna):</h4>
+             <ul>
+                <li>Chiamata a VisuaLexAPI (norme) e API Sentenze (corti interne).</li>
+                <li>Recupero testi specifici aggiornati (<code>testi_api</code>).</li>
+             </ul>
+
+             <p><strong>Output della fase:</strong> <code>contesto_recuperato</code> (Oggetto contenente <code>documenti_vettoriali</code>, <code>triplette_kg</code>, <code>testi_api</code>).</p>
+        </div>
+    </div>
+
+    <div id="modal-stage-4" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-4">&times;</span>
+            <h3>4. Costruzione dei prompt per LLM</h3>
+            <h4>4.1. Assemblaggio prompt:</h4>
+            <p>Costruzione dei prompt specifici per i moduli esperti.</p>
+            <h5>Prompt Principi:</h5>
+            <pre>
+Sei MERL-T Principi... Domanda: {query_normalizzata}
+--- CONTESTO DAL KNOWLEDGE GRAPH ---
+{triplette_kg relevantes}
+--- FINE CONTESTO KG ---
+Fornisci una spiegazione completa…
+            </pre>
+             <h5>Prompt Regole:</h5>
+             <pre>
+Sei MERL-T Regole... Domanda: {query_normalizzata}
+--- CONTESTO RECUPERATO ---
+[Fonte: API Normattiva - Art. X] {testo_api_norma}
+[Fonte: API Sentenze - Cass. Y] {testo_api_sentenza}
+[Fonte: DB Vettoriale - Manuale Z] {documento_vettoriale}
+[Fonte: KG] {triplette_kg}
+--- FINE CONTESTO ---
+Rispondi basandoti ESCLUSIVAMENTE sul contesto…
+             </pre>
+             <p><strong>Output della fase:</strong> <code>prompt_principi</code> (Stringa), <code>prompt_regole</code> (Stringa).</p>
+        </div>
+    </div>
+
+    <div id="modal-stage-5" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-5">&times;</span>
+            <h3>5. Inferenza LLM (Moduli Esperti)</h3>
+            <h4>5.1. Esecuzione Modulo Principi (se richiesto da <code>execution_plan</code>):</h4>
+            <ul>
+                <li>Inferenza su Modulo Principi LLM (Componente sostituibile/aggiornabile - API/Locale+LoRA).</li>
+                 <li>Corpus fine-tuning: Manuali (materie 3.1), decisioni/ragionamenti Corti Superiori/Principi (Corte Costituzionale, CGUE, CEDU, etc.) o commentari su di esse.</li>
+                <li>Generazione <code>risposta_principi</code>.</li>
+            </ul>
+             <h4>5.2. Esecuzione Modulo Regole (se richiesto da <code>execution_plan</code>):</h4>
+             <ul>
+                <li>Inferenza su Modulo Regole LLM (Componente sostituibile/aggiornabile, ottimizzato per RAG).</li>
+                <li>Generazione <code>risposta_regole</code>.</li>
+             </ul>
+            <p><strong>Output della fase:</strong> <code>risposta_principi</code> (Stringa, opzionale), <code>risposta_regole</code> (Stringa, opzionale).</p>
+        </div>
+    </div>
+
+     <div id="modal-stage-6" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-6">&times;</span>
+            <h3>6. Sintesi e combinazione risposte (Sintetizzatore MoE Addestrabile)</h3>
+             <h4>6.1. Integrazione risultati:</h4>
+             <p>Il Sintetizzatore MoE Addestrabile riceve <code>risposta_principi</code>, <code>risposta_regole</code>, <code>query_normalizzata</code>.</p>
+            <h4>6.2. Logica di sintesi appresa:</h4>
+             <ul>
+                 <li>Se <code>execution_plan</code> era A o B, la risposta corrispondente viene selezionata.</li>
+                 <li>Se <code>execution_plan</code> era C, il modello Sintetizzatore, addestrato tramite RLCF su validazioni esperte, sceglie ed applica la migliore strategia di combinazione. I pesi di questo modello sono anch'essi parte del patrimonio intellettuale collettivo LAIBIT.</li>
+            </ul>
+             <p>Generazione <code>risposta_finale_provvisoria</code>.</p>
+             <p><strong>Output della fase:</strong> <code>risposta_finale_provvisoria</code> (Stringa).</p>
+        </div>
+    </div>
+
+     <div id="modal-stage-7" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="modal-stage-7">&times;</span>
+            <h3>7. Post-processing e output finale</h3>
+             <h4>7.1. Formattazione:</h4>
+             <p>Formattazione della <code>risposta_finale_provvisoria</code>.</p>
+            <h4>7.2. Tracking e citazione fonti:</h4>
+            <ul>
+                <li>Verifica presenza e chiarezza citazioni.</li>
+                 <li><strong>Cruciale:</strong> Mantenimento metadati di provenienza per ogni frammento generato (dal KG, DB Vettoriale, API, Modulo Principi), fondamentale per trasparenza, validazione RLCF e modelli EaaS/attribuzione.</li>
+            </ul>
+            <h4>7.3. Filtri di sicurezza/qualità:</h4>
+            <p>Applicazione filtri finali.</p>
+             <h4>7.4. Generazione output:</h4>
+             <p>Produzione della <code>risposta_finale</code>.</p>
+             <p><strong>Output della fase:</strong> <code>risposta_finale</code> (Stringa).</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Progetto LAIBIT & MERL-T. Tutti i diritti riservati.</p>
+            </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Inizializza Animate On Scroll (AOS)
+            AOS.init({
+                duration: 800, // Durata animazione
+                once: true, // Anima solo una volta
+                offset: 50, // Offset (in px) prima che l'animazione inizi
+            });
+
+            // --- Gestione Navbar ---
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { // Cambia dopo 50px di scroll
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // --- Gestione Menu Hamburger (Mobile) ---
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.querySelector('.nav-menu');
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            // Chiudi il menu mobile quando si clicca un link
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const isMobileMenuVisible = window.getComputedStyle(hamburger).display !== 'none';
+                    if (isMobileMenuVisible && navMenu.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+
+            // --- Gestione Modali Pipeline ---
+            const modalBtns = document.querySelectorAll('.details-btn');
+            const closeBtns = document.querySelectorAll('.modal .close-btn');
+            const modals = document.querySelectorAll('.modal');
+
+            // Apri modale
+            modalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetModalId = btn.getAttribute('data-target');
+                    const targetModal = document.getElementById(targetModalId);
+                    if (targetModal) {
+                        targetModal.classList.add('show'); // Usa classe per animazione fade-in
+                    }
+                });
+            });
+
+            // Chiudi modale con bottone X
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetModalId = btn.getAttribute('data-target');
+                    const targetModal = document.getElementById(targetModalId);
+                     if (targetModal) {
+                        targetModal.classList.remove('show');
+                    }
+                });
+            });
+
+            // Chiudi modale cliccando fuori dal contenuto
+             window.addEventListener('click', (event) => {
+                modals.forEach(modal => {
+                     // Verifica se il modale è visibile e se il click è direttamente sullo sfondo del modale
+                     if (modal.classList.contains('show') && event.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                 });
+            });
+
+             // Chiudi modale premendo ESC
+             window.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.classList.contains('show')) {
+                            modal.classList.remove('show');
+                        }
+                    });
+                }
+             });
+
+
+            // --- Aggiorna anno nel footer ---
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
         });
-    });
-
-
-    // Aggiorna anno nel footer
-    const currentYearSpan = document.getElementById('current-year');
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
-
-});
+    </script>
+    </body>
+</html>
