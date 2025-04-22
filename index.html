@@ -1,35 +1,57 @@
 <!DOCTYPE html>
-<html lang="it" style="scroll-behavior: smooth;"> <head>
+<html lang="it">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="LAIBIT & MERL-T: Intelligenza artificiale avanzata per un diritto trasparente, affidabile e democratico in Italia, con pipeline interattiva.">
-    <meta name="keywords" content="intelligenza artificiale, diritto italiano, AI legale, LAIBIT, MERL-T, trasparenza, RLCF, knowledge graph, PA, giustizia digitale, innovazione legale, pipeline AI">
+    <meta name="keywords" content="intelligenza artificiale, diritto italiano, AI legale, LAIBIT, MERL-T, trasparenza, RLCF, knowledge graph, PA, giustizia digitale, innovazione legale, pipeline AI, GraphRAG">
+    <meta name="author" content="LAIBIT Project">
 
-    <title>LAIBIT & MERL-T | Pipeline AI per il Diritto Trasparente</title>
+    <title>LAIBIT & MERL-T | AI Avanzata per il Diritto Trasparente</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* --- Variabili CSS --- */
+        /* --- Variabili CSS (Refined Palette) --- */
         :root {
-            --primary-color: #004080; /* Blu istituzionale più deciso */
-            --secondary-color: #007bff; /* Blu più brillante per accenti/bottoni */
-            --light-bg: #f8f9fa; /* Sfondo chiaro per sezioni alternate */
+            --primary-color: #0A2342; /* Blu scuro più profondo */
+            --secondary-color: #0077CC; /* Blu brillante per accenti */
+            --accent-color: #4A90E2; /* Blu più chiaro per elementi secondari/hover */
+            --light-bg: #f8f9fa;
+            --white-color: #ffffff;
             --dark-text: #212529;
             --medium-text: #495057;
             --light-text: #f8f9fa;
-            --white-color: #ffffff;
             --border-color: #dee2e6;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+
             --header-font: 'Montserrat', sans-serif;
             --body-font: 'Open Sans', sans-serif;
-            --navbar-height: 70px; /* Altezza navbar per offset scroll */
+
+            --navbar-height: 70px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-pill: 50px;
+
+            --transition-fast: all 0.2s ease-in-out;
+            --transition-default: all 0.3s ease-in-out;
+
+            /* Gradient Examples */
+            --gradient-hero: linear-gradient(135deg, rgba(10, 35, 66, 0.85), rgba(0, 119, 204, 0.75));
+            --gradient-cta: linear-gradient(135deg, var(--primary-color), #0056b3);
         }
 
-        /* --- Reset e Stili Globali --- */
+        /* --- Reset e Stili Globali Migliorati --- */
         *,
         *::before,
         *::after {
@@ -39,8 +61,11 @@
         }
 
         html {
-            scroll-padding-top: var(--navbar-height); /* Offset per link interni causa navbar fissa */
+            scroll-padding-top: var(--navbar-height); /* Offset per link interni */
             scroll-behavior: smooth; /* Scroll fluido */
+            font-size: 100%; /* 1rem = 16px */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
@@ -51,75 +76,105 @@
             overflow-x: hidden; /* Previene scroll orizzontale */
         }
 
+        /* --- Tipografia e Gerarchia --- */
         h1, h2, h3, h4, h5, h6 {
             font-family: var(--header-font);
-            font-weight: 600;
+            font-weight: 700; /* Più deciso */
             line-height: 1.3;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem; /* Spaziatura consistente */
             color: var(--primary-color);
         }
 
-        h1 { font-size: clamp(2rem, 5vw, 3rem); } /* Dimensione fluida */
-        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2.5rem; }
-        h3 { font-size: clamp(1.3rem, 3vw, 1.7rem); color: var(--secondary-color); }
-        h4 { font-size: clamp(1.1rem, 2.5vw, 1.3rem); color: var(--primary-color); }
+        h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        h2 { font-size: clamp(2rem, 4.5vw, 3rem); text-align: center; margin-bottom: 3rem; }
+        h3 { font-size: clamp(1.5rem, 3.5vw, 2rem); color: var(--secondary-color); margin-bottom: 1.5rem; }
+        h4 { font-size: clamp(1.2rem, 2.8vw, 1.6rem); color: var(--primary-color); margin-bottom: 1rem; font-weight: 600;}
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--medium-text);
+            font-size: clamp(1rem, 1.8vw, 1.1rem); /* Leggermente fluido */
+            max-width: 75ch; /* Limita larghezza riga per leggibilità */
         }
+        /* Centered paragraph utility */
+        .centered-text p, p.centered-text {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
 
         a {
             color: var(--secondary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition-fast);
         }
-
         a:hover {
-            color: var(--primary-color);
+            color: var(--accent-color);
             text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+        /* Clearer focus styles for accessibility */
+        a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
+            border-radius: var(--border-radius-sm);
+        }
+        /* Remove default outline when focus-visible is supported */
+        a:focus:not(:focus-visible), button:focus:not(:focus-visible), summary:focus:not(:focus-visible), [tabindex="0"]:focus:not(:focus-visible) {
+            outline: none;
         }
 
-        img, .visual-placeholder {
+
+        img, svg, video, .visual-placeholder {
             max-width: 100%;
             height: auto;
             display: block;
+            vertical-align: middle; /* Prevents bottom space */
         }
 
+        /* --- Layout Base --- */
         .container {
-            max-width: 1140px;
+            width: 90%;
+            max-width: 1240px; /* Max width leggermente aumentato */
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px; /* Padding laterale */
         }
 
         .section-padding {
-            padding: 80px 0;
+            padding: clamp(4rem, 10vh, 7rem) 0; /* Padding verticale fluido */
         }
 
-        .bg-light {
-            background-color: var(--light-bg);
-        }
-
+        .bg-light { background-color: var(--light-bg); }
         .text-center { text-align: center; }
-        .centered-text { text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
-        .section-intro { text-align: center; max-width: 750px; margin: 0 auto 2.5rem auto; font-size: 1.1em; color: var(--dark-text); }
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3.5rem auto; /* Increased bottom margin */
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        .section-intro strong { color: var(--primary-color); font-weight: 600; }
 
-        /* --- Navbar --- */
+        /* --- Navbar (Migliorata) --- */
         .navbar {
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.95); /* Leggera trasparenza iniziale */
+            backdrop-filter: blur(5px); /* Effetto blur per modernità */
+            box-shadow: none; /* Inizia senza ombra */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
             height: var(--navbar-height);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
         }
 
         .navbar.scrolled {
             background-color: var(--white-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: none; /* Rimuovi blur quando solido */
         }
 
         .navbar .container {
@@ -131,32 +186,47 @@
 
         .nav-logo {
             font-family: var(--header-font);
-            font-size: 1.4rem;
+            font-size: clamp(1.4rem, 3vw, 1.7rem); /* Fluido */
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            transition: var(--transition-fast);
         }
-        .nav-logo:hover { text-decoration: none; color: var(--secondary-color); }
-
+        .nav-logo:hover {
+            text-decoration: none;
+            color: var(--secondary-color);
+            transform: scale(1.03);
+        }
 
         .nav-menu {
             list-style: none;
             display: flex;
-            gap: 25px;
+            gap: clamp(1.5rem, 4vw, 2.5rem); /* Spaziatura fluida */
         }
 
         .nav-menu a {
             color: var(--dark-text);
             font-weight: 600;
-            padding: 5px 0;
+            padding: 10px 0;
             position: relative;
             text-decoration: none;
+            display: flex; /* Per allineare icona e testo */
+            align-items: center;
+            gap: 8px; /* Spazio tra icona e testo */
+        }
+        .nav-menu a .fa-solid, .nav-menu a .fa-brands { /* Icon styles */
+             color: var(--secondary-color); /* Icona usa colore secondario */
+             font-size: 0.9em;
+             transition: var(--transition-fast);
+        }
+        .nav-menu a:hover .fa-solid, .nav-menu a:hover .fa-brands {
+             color: var(--accent-color); /* Cambia colore icona su hover */
         }
 
         .nav-menu a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -2px; /* Leggermente sotto */
             left: 0;
             width: 0;
             height: 2px;
@@ -165,7 +235,7 @@
         }
 
         .nav-menu a:hover::after,
-        .nav-menu a.active::after { /* Aggiungere classe 'active' con JS se si vuole evidenziare sezione corrente */
+        .nav-menu a.active::after { /* Aggiungere classe 'active' con JS */
             width: 100%;
         }
         .nav-menu a:hover {
@@ -173,86 +243,105 @@
             text-decoration: none;
         }
 
-
-        /* Hamburger Menu (per mobile) */
+        /* Hamburger Menu */
         .hamburger {
             display: none; /* Mostra solo su mobile */
             background: none;
             border: none;
             cursor: pointer;
             padding: 10px;
+            z-index: 1001; /* Sopra il menu quando aperto */
         }
         .hamburger span {
             display: block;
-            width: 25px;
+            width: 28px;
             height: 3px;
             background-color: var(--primary-color);
-            margin: 5px 0;
+            margin: 6px 0;
             transition: all 0.3s ease-in-out;
+            border-radius: 3px;
         }
 
+        /* Hamburger Active State */
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* --- Hero Section --- */
+        /* --- Hero Section (Migliorata) --- */
         #hero {
-            height: 90vh; /* Altezza quasi a schermo intero */
-            min-height: 500px;
+            min-height: 90vh; /* Altezza minima */
+            height: auto; /* Lascia che cresca se necessario */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
             color: var(--white-color);
-            /* ** IMMAGINE DI SFONDO DA METTERE QUI ** */
-            background: url('hero-background.jpg') no-repeat center center/cover; /* <-- SOSTITUISCI 'hero-background.jpg' */
-            /* Alternativa: Gradiente */
-            /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
+            background: var(--gradient-hero), url('https://images.unsplash.com/photo-1505678236705-f69d9940a639?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            background-attachment: fixed; /* Parallax effect */
+            padding: calc(var(--navbar-height) + 4rem) 0 4rem 0; /* Padding per navbar e contenuto */
         }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 30, 60, 0.6); /* Overlay scuro per leggibilità */
-            z-index: 1;
-        }
+        /* Rimossa hero-overlay, il gradiente ora è nel background */
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 800px;
+            max-width: 950px; /* Max width leggermente aumentato */
+            padding: 0 20px;
+            /* Animation applied via JS class */
         }
 
         #hero h1 {
             color: var(--white-color);
             font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
         }
 
         #hero .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            margin-bottom: 2rem;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.95); /* Più leggibile */
             font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
+        #hero .btn i { margin-right: 8px; } /* Spazio icona nel bottone hero */
 
-        /* --- Buttons --- */
+        /* --- Buttons (Migliorati con Microinterazioni) --- */
         .btn {
-            display: inline-block;
-            padding: 12px 30px;
+            display: inline-flex; /* Per allineare icona */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Spazio tra icona e testo */
+            padding: 14px 35px;
             font-family: var(--header-font);
             font-weight: 600;
-            font-size: 1rem;
-            border-radius: 50px; /* Bottone arrotondato */
+            font-size: 1.05rem; /* Leggermente ridotto */
+            border-radius: var(--border-radius-pill);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-fast); /* Transizione più rapida */
             text-align: center;
             border: 2px solid transparent;
             text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap; /* Evita wrap testo */
         }
-        .btn:hover { text-decoration: none; }
+        .btn:hover {
+            text-decoration: none;
+            transform: translateY(-3px) scale(1.03); /* Effetto hover più evidente */
+            box-shadow: var(--shadow-md);
+        }
+        .btn:active {
+            transform: translateY(-1px) scale(1.01); /* Feedback al click */
+            box-shadow: var(--shadow-sm);
+        }
+        .btn i { /* Per assicurare che le icone nei bottoni non abbiano margin extra */
+             margin: 0;
+             line-height: 1;
+             font-size: 1em; /* Adatta alla dimensione del bottone */
+        }
 
         .btn-primary {
             background-color: var(--secondary-color);
@@ -260,10 +349,8 @@
             border-color: var(--secondary-color);
         }
         .btn-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: var(--accent-color); /* Usa accent color per hover */
+            border-color: var(--accent-color);
         }
 
         .btn-secondary {
@@ -274,46 +361,60 @@
         .btn-secondary:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .btn-outline {
             background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
+            color: var(--secondary-color); /* Usa colore secondario per outline */
+            border: 2px solid var(--secondary-color);
         }
         .btn-outline:hover {
-            background-color: var(--primary-color);
+            background-color: var(--secondary-color);
             color: var(--white-color);
         }
-        #contatti .btn-outline { /* Stile specifico per CTA section */
+        /* Specific outline button style for dark backgrounds (like CTA) */
+        .section-cta .btn-outline {
             color: var(--white-color);
             border-color: var(--white-color);
         }
-        #contatti .btn-outline:hover {
-             background-color: var(--white-color);
+        .section-cta .btn-outline:hover {
+            background-color: var(--white-color);
             color: var(--primary-color);
         }
 
-
-        /* --- Sezioni Contenuto --- */
-        .content-columns {
+        /* --- Sezioni Contenuto (Grid Layout Mantenuto) --- */
+        .content-grid { /* Rinominato da content-columns per più generalità */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); /* Grid flessibile */
+            gap: clamp(2rem, 5vw, 4rem); /* Gap fluido */
             align-items: center;
         }
+        .content-grid.two-cols { /* Specifico per 2 colonne */
+             grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 992px) {
+            .content-grid.two-cols { grid-template-columns: 1fr; }
+            .content-grid.two-cols .grid-visual { order: -1; margin-bottom: 2rem; } /* Immagine sopra su mobile */
+        }
 
-        .content-columns.reversed-columns .column-visual { order: -1; } /* Inverte ordine colonne */
+        .grid-text { /* Rinominato da column-text */
+            /* Animation applied via JS class */
+        }
+        .grid-visual { /* Rinominato da column-visual */
+             /* Animation applied via JS class */
+        }
+        .grid-text p i { /* Stile icone inline nel testo */
+            color: var(--primary-color);
+            margin-right: 10px;
+            vertical-align: middle;
+            font-size: 1.2em;
+        }
 
-        .column-text { padding-right: 20px; }
-        .column-visual { padding-left: 20px; }
 
         .visual-placeholder {
-            min-height: 300px;
+            min-height: 350px;
             background-color: #e9ecef;
-            border-radius: 8px;
+            border-radius: var(--border-radius-lg); /* Raggio più ampio */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -321,360 +422,650 @@
             color: #6c757d;
             background-size: cover;
             background-position: center;
-            /* ** IMMAGINE PER IL METODO DA METTERE QUI ** */
-            /* Esempio: background-image: url('placeholder-metodo.png'); */ /* <-- SOSTITUISCI */
+            box-shadow: var(--shadow-md); /* Ombra più definita */
+            overflow: hidden; /* Nasconde bordi immagine se necessario */
         }
 
-        /* Feature Grid (Sezione Soluzione) */
+        /* Feature Grid (Migliorata) */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); /* Minimo leggermente ridotto */
+            gap: 30px; /* Gap fisso per consistenza */
+            margin-top: 4rem;
         }
 
         .feature-card {
             background-color: var(--white-color);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: clamp(1.5rem, 4vw, 2.5rem); /* Padding fluido */
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Per layout interno */
+            flex-direction: column;
+            align-items: center;
+            /* Animation applied via JS class */
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-10px); /* Solleva di più */
+            box-shadow: var(--shadow-lg); /* Ombra più pronunciata */
         }
 
-        .feature-icon-placeholder { /* Stile per il placeholder icona */
-            width: 60px;
-            height: 60px;
+        .feature-icon {
+            width: 70px;
+            height: 70px;
             background-color: var(--secondary-color);
             border-radius: 50%;
-            margin: 0 auto 20px auto;
-            display: flex; /* Centra eventuale contenuto (es. testo placeholder) */
+            margin-bottom: 25px; /* Rimosso margin auto */
+            display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white-color);
-            font-size: 1.5rem;
-            /* Se usi Font Awesome, rimuovi questo e usa <i class="..."></i> nel HTML */
+            font-size: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 119, 204, 0.3); /* Ombra colorata */
+            flex-shrink: 0; /* Non restringere icona */
         }
-        .feature-card h3 { margin-bottom: 1rem; }
-        .feature-card p { font-size: 0.95em; }
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            color: var(--primary-color); /* Usa colore primario */
+        }
+        .feature-card p {
+            font-size: 0.95rem;
+            flex-grow: 1; /* Occupa spazio rimanente */
+            color: var(--medium-text);
+        }
 
-
-        /* Importance Grid (Sezione Importanza) */
+        /* Importance Grid (Migliorata) */
         .importance-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
             gap: 30px;
-            margin: 3rem 0;
+            margin: 4rem 0;
         }
 
         .importance-item {
-            border-left: 4px solid var(--secondary-color);
-            padding: 20px 20px 20px 25px;
+            border-left: 6px solid var(--secondary-color);
+            padding: 25px 30px;
             background-color: var(--white-color);
-            border-radius: 0 5px 5px 0;
-             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-default);
+            /* Animation applied via JS class */
         }
-        .importance-item h4 { margin-bottom: 0.5rem; }
+        .importance-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(8px) scale(1.02); /* Effetto hover più dinamico */
+            border-left-color: var(--accent-color);
+        }
+        .importance-item h4 {
+             margin-bottom: 0.8rem;
+             display: flex;
+             align-items: center;
+             gap: 10px; /* Spazio tra icona e titolo */
+             color: var(--primary-color);
+        }
+        .importance-item h4 i { color: var(--secondary-color); font-size: 1em; } /* Icona nel titolo */
+        .importance-item p { font-size: 1rem; }
 
-        /* --- Pipeline Section --- */
+
+        /* --- Pipeline Section (Migliorata Visivamente) --- */
         #pipeline {
-            background-color: var(--white-color); /* Sfondo bianco per la pipeline */
+            background-color: var(--light-bg); /* Alterna sfondo */
         }
         .pipeline-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px; /* Spazio tra freccia e blocco */
-            max-width: 700px; /* Larghezza massima per leggibilità */
+            gap: 1rem; /* Spazio ridotto tra freccia e blocco */
+            max-width: 900px; /* Larghezza massima */
             margin: 0 auto;
+            position: relative; /* Per pseudo-elementi connettori */
         }
+
+        /* Connettore verticale (opzionale, per rinforzare flusso) */
+        .pipeline-container::before {
+            content: '';
+            position: absolute;
+            top: 50px; /* Inizio sotto il primo blocco */
+            bottom: 50px; /* Fine sopra l'ultimo blocco */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            background-color: var(--border-color);
+            z-index: 0;
+            border-radius: 3px;
+            display: none; /* Nascosto di default, abilitare se piace */
+        }
+
+
         .pipeline-stage {
-            background-color: var(--light-bg);
+            background-color: var(--white-color);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
+            border-radius: var(--border-radius-lg);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
             width: 100%;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: box-shadow 0.3s ease;
+            text-align: left; /* Allinea testo a sinistra */
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            position: relative; /* Per overlay o effetti */
+            z-index: 1; /* Sopra il connettore */
+            display: flex; /* Layout flessibile interno */
+            align-items: center; /* Allinea verticalmente */
+            gap: 1.5rem; /* Spazio tra contenuto e bottone */
+            /* Animation applied via JS class */
         }
-         .pipeline-stage:hover {
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-         }
+        .pipeline-stage:hover {
+            box-shadow: var(--shadow-md);
+            transform: scale(1.02); /* Leggero ingrandimento su hover */
+        }
+
+        .pipeline-content {
+            flex-grow: 1; /* Occupa spazio disponibile */
+        }
 
         .pipeline-stage h3 {
-            font-size: 1.2em;
-            margin-bottom: 15px;
+            font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            margin-bottom: 0.8rem; /* Spazio ridotto sotto titolo */
             color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Spazio tra titolo e icona */
+        }
+        .pipeline-stage h3 i {
+             color: var(--secondary-color);
+             font-size: 1em;
+             transition: var(--transition-fast);
+        }
+         .pipeline-stage:hover h3 i {
+             transform: rotate(5deg) scale(1.1); /* Microinterazione icona */
+         }
+
+        .pipeline-stage p {
+             margin-bottom: 0; /* Rimuovi margin bottom paragrafo */
+             font-size: 0.95rem;
+             color: var(--medium-text);
         }
 
         .pipeline-arrow {
-            font-size: 2em;
-            color: var(--secondary-color);
+            font-size: 2rem; /* Freccia più piccola */
+            color: var(--accent-color); /* Usa colore accento */
             line-height: 1;
-            margin: 5px 0; /* Aggiusta spazio verticale freccia */
+            margin: 0.5rem 0; /* Spazio verticale ridotto */
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+             /* Animation applied via JS class */
         }
+         .pipeline-container:hover .pipeline-arrow { opacity: 1; }
+
 
         .details-btn {
             background-color: var(--secondary-color);
             color: var(--white-color);
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 10px 22px;
+            border-radius: var(--border-radius-pill);
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: background-color 0.3s ease;
-            margin-top: 10px; /* Spazio sopra il bottone */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0; /* Non restringere bottone */
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .details-btn::after { /* Aggiunge icona "chevron" */
+            content: '\f054'; /* Font Awesome chevron-right */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.8em;
+            transition: transform 0.2s ease;
         }
         .details-btn:hover {
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+        .details-btn:hover::after {
+            transform: translateX(3px);
         }
 
-        /* --- Modal Styles --- */
+
+        /* --- Modal Styles (Migliorati con Animazione e Accessibilità) --- */
         .modal {
             display: none; /* Nascosto di default */
-            position: fixed; /* Rimane fisso durante lo scroll */
-            z-index: 1001; /* Sopra tutto il resto tranne forse la navbar se ha z-index più alto */
+            position: fixed;
+            z-index: 1010; /* Sopra navbar */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto; /* Abilita scroll se il contenuto è troppo lungo */
-            background-color: rgba(0,0,0,0.6); /* Sfondo semi-trasparente */
-            padding-top: 60px; /* Spazio dall'alto */
-             opacity: 0; /* Start hidden for fade-in */
+            overflow: hidden; /* Nasconde scroll body */
+            background-color: rgba(10, 35, 66, 0.8); /* Usa primary color per overlay */
+            backdrop-filter: blur(4px);
+            opacity: 0;
             transition: opacity 0.3s ease-in-out;
+            /* ARIA attributes managed by JS */
         }
 
-        .modal.show {
-            display: block;
-             opacity: 1;
+        .modal.is-visible {
+            display: block; /* JS aggiungerà is-visible */
+            opacity: 1;
+        }
+
+        .modal-dialog { /* Wrapper per centrare e animare */
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             width: 90%;
+             max-width: 900px;
+             max-height: 85vh;
+             transform: translate(-50%, -50%) scale(0.95); /* Stato iniziale animazione */
+             opacity: 0;
+             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal.is-visible .modal-dialog {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
 
 
         .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto; /* 5% dall'alto e centrato */
-            padding: 30px 40px;
-            border: 1px solid #ddd;
-            width: 85%; /* Larghezza del modale */
-            max-width: 800px; /* Massima larghezza */
-            border-radius: 8px;
+            background-color: var(--white-color);
+            padding: clamp(1.5rem, 5vw, 3rem); /* Padding fluido */
+            border: none; /* Rimuovi bordo */
+            border-radius: var(--border-radius-lg);
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            max-height: 85vh; /* Limita altezza massima */
-            overflow-y: auto; /* Scroll verticale interno se necessario */
+            box-shadow: var(--shadow-lg);
+            height: 100%; /* Occupa altezza del dialog */
+            max-height: inherit; /* Eredita max-height dal dialog */
+            overflow-y: auto; /* Scroll interno se necessario */
+            /* tabindex="-1" focus target for JS */
         }
-         .modal-content h3 { /* Titolo all'interno del modale */
+        .modal-content h3 { /* Titolo modale */
             margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color); /* Linea più sottile */
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-content h3 i { color: var(--secondary-color); font-size: 1em; }
+
+        .modal-content h4 { margin-top: 1.8rem; }
+        .modal-content ul {
+             list-style: none; /* Rimuovi punti elenco */
+             padding-left: 0;
+             margin-bottom: 1rem;
+        }
+         .modal-content li {
+             position: relative;
+             padding-left: 25px; /* Spazio per icona */
+             margin-bottom: 0.7rem;
+             font-size: 0.95rem;
          }
+        .modal-content li i.fa-tag,
+        .modal-content li i.fa-arrow-right,
+        .modal-content li i.fa-vector-square,
+        .modal-content li i.fa-database,
+        .modal-content li i.fa-file-arrow-down,
+        .modal-content li i.fa-sitemap,
+        .modal-content li i.fa-cloud,
+        .modal-content li i.fa-download,
+        .modal-content li i.fa-gears,
+        .modal-content li i.fa-reply { /* Icone specifiche nella lista */
+             position: absolute;
+             left: 0;
+             top: 4px; /* Allineamento verticale */
+             color: var(--secondary-color);
+             font-size: 0.9em;
+             width: 18px; /* Larghezza fissa per allineamento */
+             text-align: center;
+        }
 
         .close-btn {
-            color: #aaa;
-            position: absolute; /* Posiziona relativo a modal-content */
+            color: var(--medium-text);
+            background: none;
+            border: none;
+            position: absolute;
             top: 15px;
-            right: 25px;
-            font-size: 32px;
+            right: 20px;
+            font-size: 2rem; /* Dimensione icona */
             font-weight: bold;
             line-height: 1;
             cursor: pointer;
-            transition: color 0.3s ease;
+            padding: 5px;
+            transition: color 0.3s ease, transform 0.2s ease;
+            z-index: 10; /* Sopra contenuto modale */
         }
-
         .close-btn:hover,
         .close-btn:focus {
-            color: var(--dark-text);
-            text-decoration: none;
+            color: var(--error-color); /* Rosso su hover/focus */
+            transform: scale(1.1);
         }
 
-        /* Stile per testo preformattato (es. schema KG) nel modale */
+        /* Stile blocco 'pre' nel modale */
         .modal-content pre {
-            background-color: #eee;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: var(--light-bg);
+            padding: clamp(0.8rem, 2vw, 1.2rem);
+            border-radius: var(--border-radius-md);
             font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
-            white-space: pre-wrap; /* Va a capo se necessario */
-            word-wrap: break-word; /* Rompe parole lunghe */
-            max-height: 400px; /* Limita altezza blocco pre */
-            overflow-y: auto; /* Scroll interno se supera altezza */
-            margin-top: 15px;
-            margin-bottom: 15px;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px; /* Altezza max ridotta */
+            overflow-y: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        /* --- Allegati Section --- */
+        /* --- Allegati Section (Migliorata con <details>) --- */
         .allegati-section {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: var(--light-bg);
-            border-radius: 8px;
+            margin-top: 3.5rem; /* Spazio aumentato */
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            background-color: #e9ecef; /* Sfondo leggermente diverso */
+            border-radius: var(--border-radius-lg);
+            box-shadow: none; /* Rimuovi ombra esterna */
+            border: 1px solid var(--border-color);
         }
         .allegati-section h3 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
+        .allegati-section h3 i { color: var(--secondary-color); }
+
         details {
             background-color: var(--white-color);
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-            margin-bottom: 10px;
-            padding: 10px 15px;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 1rem;
+            padding: 0; /* Padding gestito da summary e contenuto */
+            transition: var(--transition-default);
+            overflow: hidden; /* Per animazione apertura */
         }
+        details[open] {
+            box-shadow: var(--shadow-sm);
+        }
+
         summary {
             font-weight: 600;
             cursor: pointer;
             color: var(--primary-color);
+            padding: 1rem 1.5rem; /* Padding interno */
+            display: flex; /* Per allineare icona e testo */
+            align-items: center;
+            gap: 10px;
+            list-style: none; /* Nasconde marker di default (anche webkit) */
+            transition: background-color 0.2s ease;
         }
+        summary::-webkit-details-marker { display: none; } /* Nasconde marker webkit */
         summary:hover {
+            background-color: var(--light-bg);
             color: var(--secondary-color);
         }
-        details[open] summary {
-             margin-bottom: 10px;
+        summary::before { /* Icona freccia personalizzata */
+            content: '\f078'; /* chevron-down */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.9em;
+            transition: transform 0.3s ease;
+            margin-right: 5px;
+        }
+        details[open] summary::before {
+             transform: rotate(180deg);
+        }
+        summary i { /* Icona argomento */
+             color: var(--secondary-color);
+             font-size: 1em;
+             width: 18px;
+             text-align: center;
+        }
+
+
+        .details-content { /* Wrapper per padding e animazione */
+             padding: 0 1.5rem 1.5rem 3.5rem; /* Padding interno contenuto (indentato) */
+             border-top: 1px solid var(--border-color);
+             margin-top: -1px; /* Sovrappone bordo */
         }
         details ul {
-            list-style-type: disc;
-            margin-left: 20px;
-            padding-left: 10px;
-             font-size: 0.95em;
+            list-style-type: disc; /* Usa dischi standard */
+            padding-left: 20px; /* Indentazione lista */
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-top: 1rem; /* Spazio sopra la lista */
         }
-         details li {
-             margin-bottom: 5px;
-         }
+        details li {
+            margin-bottom: 0.5rem; /* Spazio tra item */
+            color: var(--medium-text);
+        }
 
-        /* --- Call to Action Section --- */
+        /* --- Call to Action Section (Migliorata) --- */
         .section-cta {
-            background: linear-gradient(135deg, var(--primary-color), #0056b3); /* Gradiente scuro */
+            background: var(--gradient-cta);
             color: var(--light-text);
+            padding: clamp(5rem, 12vh, 8rem) 0; /* Padding aumentato */
         }
         .section-cta h2, .section-cta h3 { color: var(--white-color); }
-        .section-cta p { color: rgba(255, 255, 255, 0.9); }
+        .section-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.1em; max-width: 75ch; margin-left: auto; margin-right: auto; }
 
         .cta-box {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 8px;
-            margin-top: 3rem;
-            display: inline-block; /* Per centrare se section è text-center */
-            max-width: 700px;
+            background-color: rgba(255, 255, 255, 0.1); /* Trasparenza ridotta */
+            backdrop-filter: blur(3px); /* Effetto vetro */
+            padding: clamp(2rem, 6vw, 3.5rem); /* Padding fluido */
+            border-radius: var(--border-radius-lg);
+            margin-top: 3rem; /* Spazio ridotto */
+            display: inline-block;
+            max-width: 850px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); /* Ombra più marcata */
+             /* Animation applied via JS class */
         }
-        .cta-box p { margin-bottom: 1.5rem; }
-        .cta-box .btn { margin: 10px; }
+        .cta-box h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .cta-box p { margin-bottom: 2rem; color: var(--white-color); }
+        .cta-buttons { /* Wrapper per bottoni */
+             display: flex;
+             flex-wrap: wrap; /* Va a capo su mobile */
+             justify-content: center;
+             gap: 1.5rem; /* Spazio tra bottoni */
+        }
+        .cta-box .btn { margin: 0; } /* Rimuovi margin specifico */
 
 
         /* --- Footer --- */
         footer {
             background-color: var(--dark-text);
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.7); /* Leggermente più scuro */
             padding: 30px 0;
             text-align: center;
-            font-size: 0.9em;
+            font-size: 0.9rem;
+        }
+        footer a { color: rgba(255, 255, 255, 0.85); }
+        footer a:hover { color: var(--white-color); }
+
+        /* --- Animazioni On Scroll (Sostituisce AOS) --- */
+        /* Elementi da animare avranno classe 'animate-on-scroll' */
+        /* Stato iniziale (nascosto) */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        footer a {
-            color: rgba(255, 255, 255, 0.9);
-        }
-        footer a:hover {
-            color: var(--white-color);
+        .fade-in { transform: translateY(20px); }
+        .fade-up { transform: translateY(40px); }
+        .fade-left { transform: translateX(-40px); }
+        .fade-right { transform: translateX(40px); }
+        .zoom-in { transform: scale(0.9); }
+
+        /* Stato finale (visibile - aggiunto da JS con classe 'is-visible') */
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
         }
 
+        /* --- Accessibilità: Preferenza Movimento Ridotto --- */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; /* Disabilita scroll smooth */ }
+
+            /* Disabilita transizioni e animazioni */
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                transition-delay: 0ms !important;
+                scroll-behavior: auto !important;
+                animation: none !important;
+                transition: none !important;
+            }
+
+            /* Rimuove effetti transform su hover/focus */
+            .nav-logo:hover,
+            .btn:hover,
+            .btn:active,
+            .feature-card:hover,
+            .importance-item:hover,
+            .pipeline-stage:hover,
+            .pipeline-stage:hover h3 i,
+            .details-btn:hover,
+            .details-btn:hover::after,
+            .close-btn:hover {
+                transform: none;
+            }
+
+            /* Forza stato finale animazioni 'animate-on-scroll' */
+            .animate-on-scroll {
+                 opacity: 1;
+                 transform: translate(0, 0) scale(1);
+            }
+
+            /* Nasconde freccia animata pipeline se non necessaria */
+            .pipeline-arrow { opacity: 0.7; }
+
+            /* Assicura che elementi animati nel modal siano visibili */
+            .modal.is-visible .modal-dialog {
+                 transform: translate(-50%, -50%) scale(1);
+                 opacity: 1;
+            }
+
+            /* Rimuove parallax hero */
+            #hero { background-attachment: scroll; }
+        }
 
         /* --- Responsive Design --- */
+        @media (max-width: 1200px) {
+            .container { width: 95%; }
+        }
+
         @media (max-width: 992px) {
-            .container { max-width: 960px; }
-            .content-columns { grid-template-columns: 1fr; gap: 20px; } /* Stack colonne */
-            .content-columns.reversed-columns .column-visual { order: 0; } /* Reset ordine */
-            .column-text, .column-visual { padding: 0; }
-            .column-visual { margin-bottom: 20px; }
+            .container { max-width: 720px; } /* Reset container width */
+            .content-grid.two-cols .grid-visual { order: -1; margin-bottom: 2rem; }
         }
 
         @media (max-width: 768px) {
             :root { --navbar-height: 60px; }
-            .section-padding { padding: 60px 0; }
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.6rem; margin-bottom: 1.5rem;}
-            h3 { font-size: 1.2rem; }
+            .section-padding { padding: clamp(3rem, 8vh, 5rem) 0; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; margin-bottom: 2.5rem;}
+            h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+            p { font-size: 0.95rem; }
 
             /* Navbar mobile */
             .nav-menu {
                 display: none; /* Nascondi menu desktop */
-                position: absolute;
-                top: var(--navbar-height);
+                position: fixed; /* Fisso rispetto alla viewport */
+                top: 0;
                 left: 0;
                 width: 100%;
+                height: 100vh; /* Altezza piena */
                 background-color: var(--white-color);
                 flex-direction: column;
                 align-items: center;
-                padding: 20px 0;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                gap: 0;
+                justify-content: center; /* Centra verticalmente */
+                padding: 0;
+                box-shadow: none;
+                gap: 1.5rem; /* Spazio tra link */
+                transform: translateX(100%); /* Nascosto a destra */
+                transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Animazione slide */
+                overflow-y: auto; /* Scroll se necessario */
             }
-             .nav-menu.active { display: flex; } /* Mostra quando attivo */
+            .nav-menu.is-active {
+                display: flex;
+                transform: translateX(0);
+            }
 
-            .nav-menu li { width: 100%; text-align: center; }
+            .nav-menu li { width: auto; text-align: center; }
             .nav-menu a {
-                padding: 15px 0;
+                padding: 10px 0;
                 display: block;
-                width: 100%;
+                width: auto;
+                font-size: 1.4rem; /* Testo più grande */
+                color: var(--primary-color);
             }
-             .nav-menu a::after { display: none; } /* Nascondi effetto linea */
+            .nav-menu a::after { display: none; } /* Nascondi effetto linea */
+            .nav-menu a:hover { color: var(--secondary-color); }
 
-            .hamburger { display: block; /* Mostra hamburger */ }
+            .hamburger { display: block; position: relative; z-index: 1011; } /* Sopra menu */
+            body.menu-open { overflow: hidden; } /* Blocca scroll body con menu aperto */
 
-            /* Hero section più piccola */
-            #hero { height: 70vh; min-height: 400px; }
+            /* Hero section */
+            #hero { min-height: 80vh; background-attachment: scroll; } /* Disabilita parallax su mobile */
+            #hero h1 { font-size: 2.2rem; }
+            #hero .subtitle { font-size: 1.1rem; }
 
-            /* Colonne sempre stackate */
-             .content-columns { grid-template-columns: 1fr; }
+            /* Pipeline su mobile */
+            .pipeline-stage { flex-direction: column; align-items: flex-start; gap: 1rem; text-align: left;}
+            .details-btn { align-self: flex-start; margin-top: 0.5rem; }
 
             /* Modal su mobile */
-            .modal-content { width: 95%; margin: 10% auto; padding: 20px; max-height: 90vh;}
-            .close-btn { top: 5px; right: 15px; font-size: 28px;}
+            .modal-dialog { width: 95%; max-height: 90vh; }
+            .modal-content { padding: 1.5rem; }
+            .close-btn { top: 10px; right: 15px; font-size: 1.8rem;}
 
-             /* Pipeline su mobile */
-            .pipeline-stage { padding: 20px; }
-             .pipeline-stage h3 { font-size: 1.1em; }
-             .details-btn { padding: 6px 12px; font-size: 0.85em; }
+            .allegati-section { padding: 1.5rem; }
+            summary { padding: 0.8rem 1rem; }
+            .details-content { padding: 0 1rem 1rem 2.5rem; }
         }
 
         @media (max-width: 576px) {
-            .btn { padding: 10px 20px; font-size: 0.9rem; }
-            .cta-box { padding: 30px; }
-        }
-
-        /* Stili per Hamburger attivo (JS aggiunge/rimuove la classe 'active') */
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
+            .btn { padding: 12px 25px; font-size: 0.95rem; }
+            .cta-box { padding: 1.5rem; }
+            .cta-buttons { gap: 1rem; }
+            #hero h1 { font-size: 1.9rem; }
+            #hero .subtitle { font-size: 1rem; }
+            .feature-grid { gap: 20px; }
+            .importance-grid { gap: 20px; }
+            .pipeline-stage { padding: 1.2rem; }
         }
     </style>
-    </head>
+</head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="main-navbar">
         <div class="container">
             <a href="#" class="nav-logo">LAIBIT & MERL-T</a>
-            <ul class="nav-menu">
-                <li><a href="#sfida">La Sfida</a></li>
-                <li><a href="#soluzione">Soluzione</a></li>
-                 <li><a href="#pipeline">Pipeline</a></li> <li><a href="#metodo">Metodo</a></li>
-                <li><a href="#importanza">Perché Noi</a></li>
-                <li><a href="#contatti">Contatti</a></li>
+            <ul class="nav-menu" id="main-menu">
+                <li><a href="#sfida"><i class="fa-solid fa-puzzle-piece fa-fw" aria-hidden="true"></i> La Sfida</a></li>
+                <li><a href="#soluzione"><i class="fa-solid fa-lightbulb fa-fw" aria-hidden="true"></i> Soluzione</a></li>
+                <li><a href="#pipeline"><i class="fa-solid fa-diagram-project fa-fw" aria-hidden="true"></i> Pipeline</a></li>
+                <li><a href="#metodo"><i class="fa-solid fa-filter fa-fw" aria-hidden="true"></i> Metodo</a></li>
+                <li><a href="#importanza"><i class="fa-solid fa-scale-balanced fa-fw" aria-hidden="true"></i> Perché Noi</a></li>
+                <li><a href="#contatti"><i class="fa-solid fa-envelope fa-fw" aria-hidden="true"></i> Contatti</a></li>
             </ul>
-            <button class="hamburger" id="hamburger-menu">
+            <button class="hamburger" id="hamburger-menu" aria-label="Apri/Chiudi Menu Navigazione" aria-expanded="false" aria-controls="main-menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -683,43 +1074,50 @@
     </nav>
 
     <header id="hero">
-        <div class="hero-content container" data-aos="fade-in" data-aos-delay="200">
+        <div class="hero-content container animate-on-scroll fade-in">
             <h1>Intelligenza Artificiale per un Diritto Trasparente, Affidabile e Democratico</h1>
             <p class="subtitle">LAIBIT & MERL-T: Rigore scientifico e validazione comunitaria per innovare il sistema giuridico italiano.</p>
-            <a href="#soluzione" class="btn btn-primary">Scopri di più</a>
+            <a href="#soluzione" class="btn btn-primary">
+                <i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Scopri di più
+            </a>
         </div>
-        <div class="hero-overlay"></div> </header>
+    </header>
 
     <main>
         <section id="sfida" class="section-padding">
             <div class="container">
-                <h2 data-aos="fade-up">La Complessità Giuridica nell'Era Digitale: Una Sfida Istituzionale</h2>
-                <div class="content-columns" data-aos="fade-up" data-aos-delay="100">
-                    <p>Il sistema giuridico è un pilastro democratico, ma la sua complessità e la rapida evoluzione normativa rendono difficile l'accesso e l'applicazione del diritto. Questo impatta non solo i professionisti, ma anche le istituzioni e la loro capacità di garantire giustizia ed efficienza.</p>
-                    <p>Gli attuali strumenti digitali spesso mancano della specializzazione, affidabilità e trasparenza necessarie per il delicato dominio legale, limitando il potenziale di una vera innovazione al servizio del cittadino e delle istituzioni.</p>
+                <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-magnifying-glass-chart fa-sm" aria-hidden="true"></i> La Complessità Giuridica nell'Era Digitale: Una Sfida Istituzionale</h2>
+                <div class="content-grid two-cols">
+                    <div class="grid-text animate-on-scroll fade-right">
+                        <p><i class="fa-solid fa-file-lines fa-lg" aria-hidden="true"></i> Il sistema giuridico è un pilastro democratico, ma la sua complessità e la rapida evoluzione normativa rendono difficile l'accesso e l'applicazione del diritto. Questo impatta non solo i professionisti, ma anche le istituzioni e la loro capacità di garantire giustizia ed efficienza.</p>
+                        <p><i class="fa-solid fa-robot fa-lg" aria-hidden="true"></i> Gli attuali strumenti digitali spesso mancano della specializzazione, affidabilità e trasparenza necessarie per il delicato dominio legale, limitando il potenziale di una vera innovazione al servizio del cittadino e delle istituzioni.</p>
+                    </div>
+                    <div class="grid-visual animate-on-scroll fade-left">
+                        <div class="visual-placeholder" style="background-image: url('https://images.unsplash.com/photo-1521510895909-011b3b2e76b2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3');" role="img" aria-label="Illustrazione astratta di complessità e ordine">
+                            </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="soluzione" class="section-padding bg-light">
             <div class="container">
-                <h2 data-aos="fade-up">LAIBIT & MERL-T: Risposta Rigorosa e Collaborativa</h2>
-                <p class="section-intro" data-aos="fade-up" data-aos-delay="100"><strong>LAIBIT</strong> è la community scientifica che guida lo sviluppo di AI etica per il diritto italiano. <strong>MERL-T</strong> è il framework AI risultante, progettato per il nostro ordinamento.</p>
+                <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-check-double fa-sm" aria-hidden="true"></i> LAIBIT & MERL-T: Risposta Rigorosa e Collaborativa</h2>
+                <p class="section-intro animate-on-scroll fade-up"><strong>LAIBIT</strong> è la community scientifica che guida lo sviluppo di AI etica per il diritto italiano. <strong>MERL-T</strong> è il framework AI risultante, progettato specificamente per il nostro ordinamento giuridico.</p>
                 <div class="feature-grid">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="feature-icon-placeholder"></div>
+                    <div class="feature-card animate-on-scroll fade-up" data-delay="100"> <div class="feature-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
                         <h3>Distinzione Principi/Regole</h3>
                         <p>Combina moduli esperti sui fondamenti (Costituzione, Corti Superiori) e sull'applicazione normativa/giurisprudenziale specifica.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                         <div class="feature-icon-placeholder"></div>
+                    <div class="feature-card animate-on-scroll fade-up" data-delay="200">
+                        <div class="feature-icon"><i class="fa-solid fa-route" aria-hidden="true"></i></div>
                         <h3>Orchestrazione Controllata</h3>
                         <p>Un Router e Sintetizzatore MoE, addestrati e validati dalla community, guidano l'analisi e la generazione delle risposte in modo trasparente.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                         <div class="feature-icon-placeholder"></div>
-                        <h3>Contesto Affidabile</h3>
-                        <p>Integra Vector DB, API normative (VisuaLexAPI) e un Knowledge Graph (KG) centrale con tecniche GraphRAG avanzate.</p>
+                    <div class="feature-card animate-on-scroll fade-up" data-delay="300">
+                        <div class="feature-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></div>
+                        <h3>Contesto Affidabile (GraphRAG)</h3>
+                        <p>Integra Vector DB, API normative (VisuaLexAPI) e un Knowledge Graph (KG) centrale con tecniche GraphRAG avanzate per precisione e tracciabilità.</p>
                     </div>
                 </div>
             </div>
@@ -727,432 +1125,640 @@
 
         <section id="pipeline" class="section-padding">
             <div class="container">
-                <h2 data-aos="fade-up">Pipeline Interattiva MERL-T</h2>
-                 <p class="section-intro" data-aos="fade-up" data-aos-delay="100">Esplora il flusso di elaborazione di una query nel framework MERL-T. Clicca su "Dettagli" per approfondire ogni fase.</p>
+                <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-sliders fa-sm" aria-hidden="true"></i> Pipeline Interattiva MERL-T</h2>
+                <p class="section-intro animate-on-scroll fade-up">Esplora il flusso di elaborazione di una query nel framework MERL-T. Clicca su "Dettagli" per approfondire ogni fase, costruita con rigore e validazione comunitaria.</p>
 
                 <div class="pipeline-container">
-                    <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>1. Pre-processing e NER</h3>
-                        <p>Normalizzazione testo e riconoscimento entità giuridiche.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                        <div class="pipeline-content">
+                             <h3><i class="fa-solid fa-terminal fa-fw" aria-hidden="true"></i> 1. Pre-processing e NER</h3>
+                             <p>Normalizzazione testo e riconoscimento entità giuridiche chiave.</p>
+                        </div>
                         <button class="details-btn" data-target="modal-stage-1">Dettagli</button>
                     </div>
-                    <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                    <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                    <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>2. Routing della Query (Router MoE)</h3>
-                        <p>Instradamento intelligente della query basato su RLCF.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                         <div class="pipeline-content">
+                             <h3><i class="fa-solid fa-code-branch fa-fw" aria-hidden="true"></i> 2. Routing della Query (Router MoE)</h3>
+                             <p>Instradamento intelligente della query basato su RLCF per selezionare i moduli esperti.</p>
+                         </div>
                         <button class="details-btn" data-target="modal-stage-2">Dettagli</button>
                     </div>
-                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                    <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                    <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>3. Context Augmentation (Recupero)</h3>
-                        <p>Recupero informazioni da Vector DB, KG e API (GraphRAG).</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                        <div class="pipeline-content">
+                            <h3><i class="fa-solid fa-magnifying-glass-plus fa-fw" aria-hidden="true"></i> 3. Context Augmentation (Recupero)</h3>
+                            <p>Recupero informazioni mirate da Vector DB, Knowledge Graph e API (GraphRAG).</p>
+                        </div>
                         <button class="details-btn" data-target="modal-stage-3">Dettagli</button>
                     </div>
-                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                    <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                     <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>4. Costruzione Prompt LLM</h3>
-                         <p>Assemblaggio prompt specifici per moduli Principi e Regole.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                        <div class="pipeline-content">
+                            <h3><i class="fa-solid fa-pen-to-square fa-fw" aria-hidden="true"></i> 4. Costruzione Prompt LLM</h3>
+                            <p>Assemblaggio prompt specifici arricchiti dal contesto per moduli Principi e Regole.</p>
+                        </div>
                         <button class="details-btn" data-target="modal-stage-4">Dettagli</button>
                     </div>
-                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                     <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                     <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>5. Inferenza LLM (Moduli Esperti)</h3>
-                         <p>Esecuzione moduli LLM Principi e/o Regole.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                         <div class="pipeline-content">
+                            <h3><i class="fa-solid fa-brain fa-fw" aria-hidden="true"></i> 5. Inferenza LLM (Moduli Esperti)</h3>
+                            <p>Esecuzione ragionamento tramite LLM specializzati su Principi e/o Regole.</p>
+                         </div>
                         <button class="details-btn" data-target="modal-stage-5">Dettagli</button>
                     </div>
-                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                    <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                     <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>6. Sintesi Risposte (Sintetizzatore MoE)</h3>
-                        <p>Combinazione intelligente delle risposte basata su RLCF.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                        <div class="pipeline-content">
+                            <h3><i class="fa-solid fa-puzzle-piece fa-fw" aria-hidden="true"></i> 6. Sintesi Risposte (Sintetizzatore MoE)</h3>
+                            <p>Combinazione intelligente delle risposte basata su logica appresa (RLCF).</p>
+                        </div>
                         <button class="details-btn" data-target="modal-stage-6">Dettagli</button>
                     </div>
-                     <div class="pipeline-arrow" data-aos="fade-in" data-aos-delay="50">↓</div>
+                    <div class="pipeline-arrow animate-on-scroll fade-in"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></div>
 
-                    <div class="pipeline-stage" data-aos="fade-up">
-                        <h3>7. Post-processing e Output</h3>
-                         <p>Formattazione finale, tracciamento fonti e filtri qualità.</p>
+                    <div class="pipeline-stage animate-on-scroll fade-up">
+                        <div class="pipeline-content">
+                            <h3><i class="fa-solid fa-file-export fa-fw" aria-hidden="true"></i> 7. Post-processing e Output</h3>
+                            <p>Formattazione finale, tracciamento fonti verificabile e filtri di qualità.</p>
+                        </div>
                         <button class="details-btn" data-target="modal-stage-7">Dettagli</button>
                     </div>
                 </div>
 
-                 <div class="allegati-section" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Allegati alla Pipeline</h3>
+                <div class="allegati-section animate-on-scroll fade-up">
+                    <h3><i class="fa-solid fa-paperclip fa-sm" aria-hidden="true"></i> Dati e Risorse Fondamentali</h3>
                     <details>
-                        <summary>Allegato I - Materie Fondamentali</summary>
-                        <ul>
-                            <li>Diritto civile ed elementi fondamentali di diritto romano.</li>
-                            <li>Procedura civile.</li>
-                            <li>Diritto penale.</li>
-                            <li>Procedura penale.</li>
-                            <li>Diritto amministrativo.</li>
-                            <li>Diritto costituzionale.</li>
-                            <li>Diritto tributario.</li>
-                            <li>Diritto commerciale e fallimentare.</li>
-                            <li>Diritto del lavoro e della previdenza sociale.</li>
-                            <li>Diritto comunitario.</li>
-                            <li>Diritto internazionale pubblico e privato.</li>
-                            <li>Diritto della protezione dei dati.</li>
-                            <li>Diritto comparato pubblico e privato.</li>
-                            <li>Elementi di informatica giuridica e di ordinamento giudiziario.</li>
-                        </ul>
+                        <summary><i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i> Allegato I - Materie Fondamentali (Base Conoscenza)</summary>
+                        <div class="details-content">
+                            <ul>
+                                <li>Diritto civile ed elementi fondamentali di diritto romano.</li>
+                                <li>Procedura civile.</li>
+                                <li>Diritto penale.</li>
+                                <li>Procedura penale.</li>
+                                <li>Diritto amministrativo.</li>
+                                <li>Diritto costituzionale.</li>
+                                <li>Diritto tributario.</li>
+                                <li>Diritto commerciale e fallimentare.</li>
+                                <li>Diritto del lavoro e della previdenza sociale.</li>
+                                <li>Diritto dell'Unione Europea (ex Comunitario).</li>
+                                <li>Diritto internazionale pubblico e privato.</li>
+                                <li>Diritto della protezione dei dati.</li>
+                                <li>Diritto comparato pubblico e privato.</li>
+                                <li>Elementi di informatica giuridica e di ordinamento giudiziario.</li>
+                             </ul>
+                        </div>
                     </details>
-                    <details>
-                         <summary>Allegato II - Norme Principali (Estratto)</summary>
-                         <ul>
-                            <li>Costituzione</li>
-                            <li>Codice penale (R.D. 19 ottobre 1930, n. 1398)</li>
-                            <li>Codice di procedura civile (R.D. 28 ottobre 1940, n. 1443)</li>
-                            <li>Codice civile (R.D. 16 marzo 1942, n. 262)</li>
-                            <li>Codice della navigazione</li>
-                            <li>Codice di procedura penale (D.P.R. 22 settembre 1988, n. 447)</li>
-                            <li>Codice della strada (D.lgs. 30 aprile 1992, n. 285)</li>
-                            <li>Codice del processo tributario (D.lgs. 31 dicembre 1992, n. 546)</li>
-                            <li>Codice in materia di protezione dei dati personali (Codice della privacy) (D.lgs. 30 giugno 2003, n. 196)</li>
-                            <li>Codice delle comunicazioni elettroniche (D.lgs. 1 agosto 2003, n. 259)</li>
-                            <li>Codice dei beni culturali e del paesaggio (D.lgs. 22 gennaio 2004, n. 42)</li>
-                            <li>Codice della proprietà industriale (D.lgs. 10 febbraio 2005, n. 30)</li>
-                            <li>Codice dell'amministrazione digitale (D.lgs. 7 marzo 2005, n. 82)</li>
-                             <li>Codice del consumo (D.lgs. 6 settembre 2005, n. 206)</li>
-                             <li>Codice delle assicurazioni private (D.lgs. 7 settembre 2005, n. 209)</li>
-                             <li>Codice dell'ambiente (D.lgs. 3 aprile 2006, n. 152)</li>
-                             <li>Codice dei contratti pubblici (D.lgs. 31 marzo 2023, n. 36)</li>
-                             <li>Codice dell'ordinamento militare (D.lgs. 15 marzo 2010, n. 66)</li>
-                             <li>Codice del processo amministrativo (D.lgs. 2 luglio 2010, n. 104)</li>
-                              <li>Codice antimafia (D.lgs. 6 settembre 2011, n. 159)</li>
-                              <li>Codice di giustizia contabile (D.lgs. 26 agosto 2016, n. 174)</li>
-                              <li>Codice del Terzo settore (D.lgs. 3 luglio 2017, n. 117)</li>
-                              <li>Codice della crisi d'impresa e dell'insolvenza (D.lgs. 12 gennaio 2019, n. 14)</li>
-                              <li>Regolamento generale sulla protezione dei dati (Reg. UE 27 aprile 2016, n. 679)</li>
-                            <li>Legge sul procedimento amministrativo (L. 7 agosto 1990, n. 241)</li>
-                            <li>Responsabilità amministrativa delle persone giuridiche (D.lgs. 8 giugno 2001, n. 231)</li>
-                             <li>Testo unico sul pubblico impiego (D.lgs. 30 marzo 2001, n. 165)</li>
-                             <li>Testo unico degli enti locali (D.lgs. 18 agosto 2000, n. 267)</li>
-                             <li>Testo unico bancario (D.lgs. 1 settembre 1993, n. 385)</li>
-                             <li>Testo unico edilizia (D.P.R. 6 giugno 2001, n. 380)</li>
-                             <li>Testo unico sull'immigrazione (D.lgs. 25 luglio 1998, n. 286)</li>
-                              <li>Testo unico stupefacenti (D.P.R. 9 ottobre 1990, n. 309)</li>
-                              <li>Testo unico sulla sicurezza sul lavoro (D.lgs. 9 aprile 2008, n. 81)</li>
-                             <li>Statuto del contribuente (L. 27 luglio 2000, n. 212)</li>
-                             <li>... (Vedi testo completo per l'elenco esaustivo)</li>
-                         </ul>
-                     </details>
-                 </div>
-            </div>
-        </section>
-        <section id="metodo" class="section-padding bg-light"> <div class="container">
-                 <h2 data-aos="fade-up">Il Metodo LAIBIT: Validazione e Trasparenza (RLCF)</h2>
-                 <p class="section-intro" data-aos="fade-up" data-aos-delay="100">L'affidabilità di MERL-T si basa sull'<strong>Apprendimento Rinforzato dal Feedback della Comunità (RLCF)</strong>, un processo trasparente e innovativo.</p>
-                 <div class="content-columns reversed-columns"> <div class="column-text" data-aos="fade-left" data-aos-delay="200">
-                        <h3>Validazione Esperta Continua</h3>
-                        <p>Esperti giuridici qualificati della community LAIBIT affinano e validano costantemente le capacità del sistema tramite feedback strutturato.</p>
-                        <h3>Knowledge Graph: Bene Comune</h3>
-                        <p>Il KG centrale mappa concetti e relazioni giuridiche. È un patrimonio pubblico dinamico, che evolve con la validazione della comunità, garantendo tracciabilità.</p>
-                        <h3>Una Nuova <em>Disputatio</em> Digitale</h3>
-                        <p>Questo approccio promuove una revisione scientifica continua, allineando l'AI all'interpretazione giuridica consolidata e validata.</p>
-                     </div>
-                     <div class="column-visual" data-aos="fade-right" data-aos-delay="100">
-                        <div class="visual-placeholder" style="background-image: url('placeholder-metodo.png');"> Metodo Visivo</div> </div>
-                 </div>
+                     <details>
+                        <summary><i class="fa-solid fa-book-bookmark fa-fw" aria-hidden="true"></i> Allegato II - Fonti Normative Principali (Estratto)</summary>
+                        <div class="details-content">
+                            <ul>
+                                <li>Costituzione</li>
+                                <li>Codice penale (R.D. 19 ottobre 1930, n. 1398)</li>
+                                <li>Codice di procedura civile (R.D. 28 ottobre 1940, n. 1443)</li>
+                                <li>Codice civile (R.D. 16 marzo 1942, n. 262)</li>
+                                <li>Codice di procedura penale (D.P.R. 22 settembre 1988, n. 447)</li>
+                                <li>Codice in materia di protezione dei dati personali (D.lgs. 30 giugno 2003, n. 196 e Reg. UE 679/2016 - GDPR)</li>
+                                <li>Codice dell'amministrazione digitale (D.lgs. 7 marzo 2005, n. 82)</li>
+                                <li>Codice dei contratti pubblici (D.lgs. 31 marzo 2023, n. 36)</li>
+                                <li>Codice del processo amministrativo (D.lgs. 2 luglio 2010, n. 104)</li>
+                                <li>Legge sul procedimento amministrativo (L. 7 agosto 1990, n. 241)</li>
+                                <li>Testo unico sul pubblico impiego (D.lgs. 30 marzo 2001, n. 165)</li>
+                                <li>Testo unico degli enti locali (D.lgs. 18 agosto 2000, n. 267)</li>
+                                <li>Testo unico sulla sicurezza sul lavoro (D.lgs. 9 aprile 2008, n. 81)</li>
+                                <li>Statuto del contribuente (L. 27 luglio 2000, n. 212)</li>
+                                <li>... (L'elenco completo include molti altri codici e testi unici fondamentali)</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
             </div>
         </section>
 
-         <section id="importanza" class="section-padding"> <div class="container">
-                <h2 data-aos="fade-up">Una Necessità Strategica, Non Solo un'Opportunità</h2>
-                <p class="section-intro" data-aos="fade-up" data-aos-delay="100">Adottare AI nel settore legale/pubblico richiede responsabilità. L'approccio LAIBIT risponde a esigenze cruciali:</p>
-                <div class="importance-grid">
-                    <div class="importance-item" data-aos="zoom-in" data-aos-delay="200">
-                        <h4>Responsabilità Scientifica</h4>
-                        <p>Promuovere strumenti rigorosi, accurati e accessibili per l'avanzamento della scienza giuridica digitale.</p>
+        <section id="metodo" class="section-padding bg-light">
+            <div class="container">
+                 <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-shield-halved fa-sm" aria-hidden="true"></i> Il Metodo LAIBIT: Validazione e Trasparenza (RLCF)</h2>
+                 <p class="section-intro animate-on-scroll fade-up">L'affidabilità di MERL-T non deriva solo da algoritmi avanzati, ma da un processo di <strong>Apprendimento Rinforzato dal Feedback della Comunità (RLCF)</strong>, garantendo trasparenza, controllo e allineamento con l'expertise giuridica.</p>
+                <div class="content-grid two-cols">
+                     <div class="grid-text animate-on-scroll fade-left">
+                         <h3><i class="fa-solid fa-users-gear fa-lg" aria-hidden="true"></i> Validazione Esperta Continua</h3>
+                         <p>Esperti giuridici qualificati della community LAIBIT affinano e validano costantemente le capacità del sistema (Router, Sintetizzatore, KG) tramite feedback strutturato e revisione peer-to-peer.</p>
+                         <h3><i class="fa-solid fa-share-nodes fa-lg" aria-hidden="true"></i> Knowledge Graph: Bene Comune</h3>
+                         <p>Il KG centrale, che mappa concetti e relazioni giuridiche, è un patrimonio pubblico dinamico. Evolve con la validazione della comunità, garantendo tracciabilità e affidabilità delle fonti informative.</p>
+                         <h3><i class="fa-solid fa-microscope fa-lg" aria-hidden="true"></i> Una Nuova <em>Disputatio</em> Digitale</h3>
+                         <p>Questo approccio collaborativo promuove una revisione scientifica continua, allineando l'intelligenza artificiale all'interpretazione giuridica consolidata e validata dalla comunità di esperti.</p>
                     </div>
-                     <div class="importance-item" data-aos="zoom-in" data-aos-delay="300">
-                        <h4>Necessità Democratica</h4>
-                        <p>Garantire AI trasparente e controllabile per la PA e la giustizia, al servizio dei cittadini e dei principi costituzionali.</p>
-                    </div>
-                     <div class="importance-item" data-aos="zoom-in" data-aos-delay="400">
-                        <h4>Evitare l'Arretramento</h4>
-                        <p>Colmare il divario con l'innovazione privata, mantenendo l'efficienza pubblica e la capacità di governare la complessità.</p>
+                    <div class="grid-visual animate-on-scroll fade-right">
+                        <div class="visual-placeholder" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365410b3864?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3');" role="img" aria-label="Schema astratto di una rete neurale con nodi interconnessi">
+                            </div>
                     </div>
                 </div>
-                <p class="centered-text" data-aos="fade-up" data-aos-delay="200">L'ecosistema LAIBIT, con il suo nucleo pubblico e architettura aperta, offre benefici a professionisti, accademici, studenti, editori, imprese tech e cittadini.</p>
+            </div>
+        </section>
+
+        <section id="importanza" class="section-padding">
+            <div class="container">
+                <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-gavel fa-sm" aria-hidden="true"></i> Oltre l'Innovazione Tecnica: Una Necessità Strategica</h2>
+                <p class="section-intro animate-on-scroll fade-up">Adottare l'AI nel settore legale e pubblico richiede più che tecnologia: serve responsabilità, visione e controllo. L'approccio LAIBIT & MERL-T risponde a queste esigenze cruciali:</p>
+                <div class="importance-grid">
+                    <div class="importance-item animate-on-scroll zoom-in">
+                        <h4><i class="fa-solid fa-flask-vial fa-fw" aria-hidden="true"></i> Responsabilità Scientifica</h4>
+                        <p>Promuovere strumenti rigorosi, accurati e accessibili per l'avanzamento della scienza giuridica digitale, basati su metodi verificabili.</p>
+                    </div>
+                    <div class="importance-item animate-on-scroll zoom-in" data-delay="100">
+                        <h4><i class="fa-solid fa-landmark-flag fa-fw" aria-hidden="true"></i> Imperativo Democratico</h4>
+                        <p>Garantire AI trasparente e controllabile per la PA e la giustizia, al servizio dei cittadini e dei principi costituzionali di equità e accessibilità.</p>
+                    </div>
+                    <div class="importance-item animate-on-scroll zoom-in" data-delay="200">
+                        <h4><i class="fa-solid fa-lightbulb-dollar fa-fw" aria-hidden="true"></i> Competitività e Sovranità</h4>
+                        <p>Colmare il divario con l'innovazione privata, mantenendo l'efficienza pubblica e la capacità strategica di governare la complessità normativa.</p>
+                    </div>
+                </div>
+                <p class="centered-text animate-on-scroll fade-up" style="margin-top: 3rem;">L'ecosistema LAIBIT, con il suo nucleo pubblico e architettura aperta, offre benefici tangibili a <strong>professionisti, accademici, studenti, editori, imprese tech e cittadini</strong>.</p>
             </div>
         </section>
 
         <section id="contatti" class="section-padding section-cta">
-            <div class="container text-center" data-aos="fade-up">
-                <h2>Un Impegno Collettivo per il Futuro del Diritto</h2>
-                <p>LAIBIT è un invito a partecipare alla costruzione di un'AI giuridica al servizio della società. Contribuire significa garantire rigore, creare un bene comune digitale e assicurare che l'innovazione rispetti i nostri valori fondamentali.</p>
-                <p><strong>Il futuro del diritto richiede visione, rigore e collaborazione.</strong></p>
-                <div class="cta-box" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Entra a far parte della Community</h3>
-                    <p>Siamo alla ricerca di istituzioni, professionisti, accademici e sviluppatori interessati a contribuire.</p>
-                    <a href="mailto:contatti@laibit-merlt.it?subject=Richiesta Informazioni Progetto LAIBIT & MERL-T" class="btn btn-secondary">Contattaci</a>
-                    <a href="[LINK AL TUO GITHUB REPO/DOCUMENTAZIONE]" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Scopri la Documentazione</a> </div>
+            <div class="container text-center">
+                <h2 class="animate-on-scroll fade-up"><i class="fa-solid fa-handshake-angle fa-sm" aria-hidden="true"></i> Un Impegno Collettivo per il Futuro del Diritto</h2>
+                <p class="animate-on-scroll fade-up">LAIBIT è un invito a partecipare attivamente alla costruzione di un'intelligenza artificiale giuridica al servizio della società italiana. Contribuire significa garantire rigore, creare un bene comune digitale e assicurare che l'innovazione rispetti i nostri valori fondamentali.</p>
+                <p class="animate-on-scroll fade-up"><strong>Il futuro del diritto richiede visione, rigore scientifico e collaborazione.</strong></p>
+                <div class="cta-box animate-on-scroll fade-up" data-delay="100">
+                    <h3><i class="fa-solid fa-people-group fa-sm" aria-hidden="true"></i> Entra a far parte della Community</h3>
+                    <p>Siamo alla ricerca di istituzioni, professionisti del diritto, accademici, ricercatori e sviluppatori interessati a contribuire alla validazione e all'evoluzione di MERL-T.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:info@laibit.it?subject=Richiesta%20Informazioni%20Progetto%20LAIBIT%20%26%20MERL-T" class="btn btn-secondary">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contattaci
+                        </a>
+                        <a href="https://github.com/laibit" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-github" aria-hidden="true"></i> Scopri su GitHub
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-     <div id="modal-stage-1" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-1">&times;</span>
-            <h3>1. Pre-processing e Named Entity Recognition (NER)</h3>
-            <p><strong>Input:</strong> <code>query_utente</code> (Stringa): testo della domanda posta dall'utente in lingua italiana.</p>
-            <h4>1.1. Normalizzazione testo:</h4>
-            <p>La <code>query_utente</code> viene normalizzata: conversione a lowercase, rimozione caratteri speciali, standardizzazione abbreviazioni e riferimenti canonici.</p>
-            <h4>1.2. Named Entity Recognition (NER) giuridico:</h4>
-            <p>Un modello NER specializzato analizza la query normalizzata estraendo:</p>
-            <ul>
-                <li>ENTITA_CONCETTO</li>
-                <li>ENTITA_NORMA</li>
-                <li>ENTITA_SENTENZA</li>
-            </ul>
-             <p>con i relativi identificatori strutturati.</p>
-            <p><strong>Output della fase:</strong> <code>query_normalizzata</code> (Stringa), <code>lista_entita_estratte</code> (Lista di tuple).</p>
+    <div id="modal-stage-1" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1"> <button class="close-btn" data-target="modal-stage-1" aria-label="Chiudi Dettagli Fase 1">&times;</button>
+                 <h3 id="modal-title-1"><i class="fa-solid fa-terminal fa-fw" aria-hidden="true"></i> 1. Pre-processing e Named Entity Recognition (NER)</h3>
+                 <p><strong>Input:</strong> <code>query_utente</code> (Stringa): Testo della domanda posta dall'utente in lingua italiana.</p>
+                 <h4>1.1. Normalizzazione Testo:</h4>
+                 <p>La <code>query_utente</code> viene normalizzata per uniformità: conversione a lowercase, rimozione di caratteri speciali non significativi, espansione di abbreviazioni comuni e standardizzazione di riferimenti normativi o giurisprudenziali canonici (es. "art. 1 Cost." diventa una forma strutturata).</p>
+                 <h4>1.2. Named Entity Recognition (NER) Giuridico:</h4>
+                 <p>Un modello NER specificamente addestrato sul dominio legale italiano analizza la query normalizzata per estrarre e classificare entità rilevanti:</p>
+                 <ul>
+                     <li><i class="fa-solid fa-tag" aria-hidden="true"></i> <strong>ENTITA_CONCETTO:</strong> Concetti giuridici astratti (es. "responsabilità contrattuale", "diritto di recesso").</li>
+                     <li><i class="fa-solid fa-tag" aria-hidden="true"></i> <strong>ENTITA_NORMA:</strong> Riferimenti a specifiche norme (es. "Art. 1373 Codice Civile", "L. 241/1990").</li>
+                     <li><i class="fa-solid fa-tag" aria-hidden="true"></i> <strong>ENTITA_SENTENZA:</strong> Riferimenti a decisioni giurisprudenziali (es. "Cass. Sez. Un. 12345/2023").</li>
+                     <li><i class="fa-solid fa-tag" aria-hidden="true"></i> <strong>ENTITA_ORGANO:</strong> Organi giudiziari o amministrativi (es. "Corte Costituzionale", "TAR Lazio").</li>
+                 </ul>
+                 <p>Ogni entità estratta è associata a un identificatore strutturato (es. URN per le norme) ove possibile.</p>
+                 <p><strong>Output della fase:</strong> Oggetto contenente <code>query_normalizzata</code> (Stringa) e <code>lista_entita_estratte</code> (Lista di oggetti {tipo, testo, id_strutturato}).</p>
+            </div>
         </div>
     </div>
 
-     <div id="modal-stage-2" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-2">&times;</span>
-            <h3>2. Routing della query (Router MoE Addestrabile)</h3>
-            <h4>2.1. Analisi input:</h4>
-             <p>Il Router MoE Addestrabile (un modello "gating" dedicato) riceve <code>query_normalizzata</code> e <code>lista_entita_estratte</code>.</p>
-            <h4>2.2. Logica di instradamento appresa:</h4>
-            <p>Il modello Router, addestrato tramite Reinforcement Learning from Community Feedback (RLCF), su dati validati da esperti giuridici, predice l'execution plan più appropriato.</p>
-            <p>Il modello valuta le caratteristiche della query e delle entità per determinare se attivare Modulo Principi, Modulo Regole o una loro combinazione. I pesi di questo modello rappresentano parte del patrimonio intellettuale collettivo di LAIBIT.</p>
-             <h4>2.3. Definizione execution plan:</h4>
-             <p>Il Router MoE seleziona uno dei piani possibili:</p>
-             <ul>
-                <li>Piano A: solo Modulo Principi.</li>
-                <li>Piano B: solo Modulo Regole.</li>
-                <li>Piano C: combinazione Modulo Principi + Modulo Regole.</li>
-             </ul>
-             <p><strong>Output della fase:</strong> <code>execution_plan</code> (Oggetto che definisce moduli e sequenza).</p>
+    <div id="modal-stage-2" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-2" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                <button class="close-btn" data-target="modal-stage-2" aria-label="Chiudi Dettagli Fase 2">&times;</button>
+                <h3 id="modal-title-2"><i class="fa-solid fa-code-branch fa-fw" aria-hidden="true"></i> 2. Routing della Query (Router MoE Addestrabile)</h3>
+                <h4>2.1. Analisi Input:</h4>
+                <p>Il Router MoE (Mixture of Experts) addestrabile, un modello "gating" dedicato, riceve la <code>query_normalizzata</code> e la <code>lista_entita_estratte</code> dalla fase precedente.</p>
+                <h4>2.2. Logica di Instradamento Appresa (RLCF):</h4>
+                <p>Questo modello è cruciale e rappresenta un core asset della community LAIBIT. È addestrato tramite <strong>Reinforcement Learning from Community Feedback (RLCF)</strong> su un dataset di query giuridiche e piani di esecuzione validati da esperti legali. Il Router impara a:</p>
+                <ul>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Valutare la natura della query (interpretativa, applicativa, fattuale).</li>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Pesare la rilevanza delle entità estratte (concetti vs norme specifiche).</li>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Determinare se è necessaria una comprensione profonda dei principi fondamentali (attivando il Modulo Principi) o un'analisi specifica delle regole applicabili (attivando il Modulo Regole), o una combinazione.</li>
+                </ul>
+                 <p>I pesi e la logica di questo modello riflettono il consenso interpretativo della community scientifica, garantendo coerenza e affidabilità.</p>
+                <h4>2.3. Definizione Execution Plan:</h4>
+                <p>Il Router MoE seleziona il piano di esecuzione ottimale tra le opzioni predefinite:</p>
+                <ul>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> <strong>Piano A:</strong> Solo Modulo Principi (per query astratte, interpretazione fondamentale).</li>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> <strong>Piano B:</strong> Solo Modulo Regole (per query specifiche su norme o fatti, basate su RAG).</li>
+                    <li><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> <strong>Piano C:</strong> Combinazione Modulo Principi + Modulo Regole (per query complesse che richiedono sia visione d'insieme che dettaglio applicativo).</li>
+                </ul>
+                <p><strong>Output della fase:</strong> <code>execution_plan</code> (Oggetto strutturato che definisce i moduli da attivare, la loro sequenza e potenziali parametri specifici).</p>
+            </div>
+         </div>
+    </div>
+
+     <div id="modal-stage-3" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                <button class="close-btn" data-target="modal-stage-3" aria-label="Chiudi Dettagli Fase 3">&times;</button>
+                <h3 id="modal-title-3"><i class="fa-solid fa-magnifying-glass-plus fa-fw" aria-hidden="true"></i> 3. Context Augmentation (Recupero Informazioni - GraphRAG)</h3>
+                <p>Questa fase arricchisce la query con contesto rilevante, guidata dall'<code>execution_plan</code>. Utilizza un approccio ispirato a <strong>Graph Retrieval-Augmented Generation (GraphRAG)</strong>, combinando recupero vettoriale, grafo di conoscenza e API esterne.</p>
+
+                <h4>3.1. Recupero da Database Vettoriale (se Modulo Regole attivo):</h4>
+                <ul>
+                    <li><i class="fa-solid fa-vector-square" aria-hidden="true"></i> Calcolo dell'embedding della <code>query_normalizzata</code>.</li>
+                    <li><i class="fa-solid fa-database" aria-hidden="true"></i> Ricerca ANN (Approximate Nearest Neighbor) su un Vector DB (es. Milvus, FAISS, Weaviate) contenente:
+                        <ul>
+                            <li>Testi normativi principali (Codici, TU - vedi Allegato II).</li>
+                            <li>Commentari open-source associati alle norme.</li>
+                            <li>Manuali universitari aggiornati (materie Allegato I).</li>
+                            <li>Massime giurisprudenziali rilevanti (Cassazione, CdS, CdC, Corti merito).</li>
+                            <li>(Componente estensibile con dati specifici del dominio o dell'utente).</li>
+                        </ul>
+                    </li>
+                     <li><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Recupero dei <code>top_K</code> chunk di testo più simili semanticamente (<code>documenti_vettoriali</code>), con metadati di provenienza.</li>
+                </ul>
+
+                <h4>3.2. Recupero da Knowledge Graph (se Modulo Principi o Regole attivo):</h4>
+                <ul>
+                    <li><i class="fa-solid fa-sitemap" aria-hidden="true"></i> Utilizzo delle <code>ENTITA_CONCETTO</code>, <code>ENTITA_NORMA</code>, <code>ENTITA_SENTENZA</code> estratte nella Fase 1 per interrogare il Knowledge Graph centrale (es. Neo4j, ArangoDB).</li>
+                    <li><strong>Ruolo Centrale del KG:</strong> Il KG è un asset fondamentale di LAIBIT, curato e validato dalla community. Modella le relazioni tra norme, concetti, giurisprudenza, procedure. Lo schema (nodi, relazioni) è definito collaborativamente.
+                        <h5>Schema KG Esempio (Nodi):</h5>
+                        <pre>Norma, ConcettoGiuridico, AttoGiudiziario, SoggettoGiuridico, Procedura, Dottrina...</pre>
+                         <h5>Schema KG Esempio (Relazioni):</h5>
+                         <pre>disciplina, interpreta, cita, modifica, relazione_concettuale, applica_a...</pre>
+                    </li>
+                    <li><i class="fa-solid fa-download" aria-hidden="true"></i> Recupero di triplette (soggetto-predicato-oggetto) e sotto-grafi rilevanti (<code>triplette_kg</code>) che forniscono contesto strutturato e relazioni chiave.</li>
+                </ul>
+                <h5>Schema KG Dettagliato:</h5>
+                <details>
+                    <summary><i class="fa-solid fa-diagram-project fa-xs" aria-hidden="true"></i> Espandi Schema KG</summary>
+                    <div class="details-content">
+                        <h4>A. Tipologie di Nodi</h4>
+                        <pre>
+1. Norma: Rappresenta atti normativi. Props: id, estremi, fonte, titolo, desc, date, ambito, URN, status (vigente/abrogata), link_testo_vigente.
+2. Concetto Giuridico: Idee/principi astratti. Props: id, nome, definizione, ambito, sinonimi, concetti_correlati.
+3. Soggetto Giuridico: Entità (fisica/giuridica). Props: id, nome, tipo (cittadino, impresa, PA), ruolo.
+4. Atto Giudiziario / Provvedimento: Decisioni/atti. Props: id, estremi, organo, data, tipologia (sentenza, ordinanza, decreto), materia, massima, URN/link.
+5. Organo: Entità emittente. Props: id, nome, tipo (giurisdizionale, amministrativo).
+6. Dottrina / Commentario: Testi/opinioni. Props: id, titolo, autore, fonte, data, abstract.
+7. Procedura / Processo: Sequenze di atti. Props: id, nome, desc, ambito, fasi_principali.
+8. Fonte del Diritto: Categoria della fonte. Props: id, nome (Costituzione, Legge, Regolamento UE).
+                        </pre>
+                        <h4>B. Tipologie di Relazioni</h4>
+                        <pre>
+1. DISCIPLINA (Norma -> Concetto)
+2. APPLICA_A (Norma -> Soggetto)
+3. INTERPRETA (AttoGiudiziario -> Norma | Concetto)
+4. COMMENTA (Dottrina -> Norma | Concetto | AttoGiudiziario)
+5. CITA (Nodo -> Nodo) - Con contesto della citazione
+6. MODIFICA / DEROGA / ABROGA (Norma -> Norma) - Con riferimento normativo della modifica
+7. RELAZIONE_CONCETTUALE (Concetto -> Concetto) - Props: tipo (gerarchia, sinonimia, antinomia)
+8. EMESSO_DA (AttoGiudiziario | Provvedimento -> Organo)
+9. HA_FONTE (Norma -> FonteDelDiritto)
+10. PREVEDE (Norma -> Procedura)
+11. RIGUARDA (AttoGiudiziario | Provvedimento -> Soggetto)
+12. FASE_DI (AttoGiudiziario | Provvedimento -> Procedura)
+                         </pre>
+                    </div>
+                 </details>
+
+                <h4>3.3. Recupero Dinamico via API (se Modulo Regole attivo e entità specifiche trovate):</h4>
+                <ul>
+                    <li><i class="fa-solid fa-cloud" aria-hidden="true"></i> Se sono state identificate <code>ENTITA_NORMA</code> con URN o <code>ENTITA_SENTENZA</code> con identificativi specifici, vengono effettuate chiamate API mirate:
+                        <ul>
+                            <li><strong>VisuaLexAPI / Normattiva API:</strong> Per recuperare il testo vigente aggiornato della norma.</li>
+                            <li><strong>API Giurisprudenza (es. ItalgiureWeb, se accessibili):</strong> Per ottenere il testo completo della sentenza.</li>
+                        </ul>
+                    </li>
+                    <li><i class="fa-solid fa-download" aria-hidden="true"></i> Recupero dei testi specifici (<code>testi_api</code>) per garantire l'informazione più aggiornata possibile.</li>
+                </ul>
+
+                <p><strong>Output della fase:</strong> <code>contesto_recuperato</code> (Oggetto complesso contenente <code>documenti_vettoriali</code>, <code>triplette_kg</code>, <code>testi_api</code>, tutti con metadati di provenienza).</p>
+            </div>
         </div>
     </div>
 
-     <div id="modal-stage-3" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-3">&times;</span>
-            <h3>3. Context Augmentation (Recupero Informazioni)</h3>
-             <p>Questa fase avviene in parallelo o sequenza in base all'<code>execution_plan</code>. Si ispira a tecniche di GraphRAG (cfr. Guo et al., "LightRAG", arXiv:2410.05779).</p>
+    <div id="modal-stage-4" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-4" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                <button class="close-btn" data-target="modal-stage-4" aria-label="Chiudi Dettagli Fase 4">&times;</button>
+                <h3 id="modal-title-4"><i class="fa-solid fa-pen-to-square fa-fw" aria-hidden="true"></i> 4. Costruzione dei Prompt per LLM</h3>
+                <p>Basandosi sull'<code>execution_plan</code> e sul <code>contesto_recuperato</code>, vengono costruiti dinamicamente i prompt per i moduli LLM selezionati. L'obiettivo è fornire all'LLM tutte le informazioni necessarie in modo strutturato e istruzioni chiare.</p>
 
-             <h4>3.1. Recupero da database vettoriale (se <code>execution_plan</code> include Modulo Regole):</h4>
-            <ul>
-                <li>Calcolo embedding query e ricerca ANN su DB Vettoriale (Milvus/FAISS).</li>
-                <li>Contenuto DB Vettoriale: Componente personalizzabile/estensibile contenente di base: Codici principali italiani (con commenti open-source), manuali universitari per materie fondamentali (vedi Allegato I), massime giurisprudenziali delle corti interne (Cassazione, CdS, CdC, TAR rilevanti). Norme principali URN (vedi Allegato II).</li>
-                <li>Recupero top_K documenti (<code>documenti_vettoriali</code>).</li>
-            </ul>
-
-             <h4>3.2. Recupero da Knowledge Graph (se previsto dall’<code>execution_plan</code>):</h4>
-            <ul>
-                <li>Utilizzo di <code>ENTITA_CONCETTO</code> per interrogare il Knowledge Graph (Neo4j).</li>
-                 <li><strong>KG come core asset:</strong> questo grafo rappresenta il patrimonio intellettuale collettivo per eccellenza, strutturato secondo uno schema definito che evolve dinamicamente grazie al processo RLCF e al contributo della community LAIBIT. La sua manutenzione e il suo arricchimento sono un'attività chiave della community, per assicurarne l’accuratezza e la sicurezza.</li>
-            </ul>
-            <h5>Schema KG Proposto:</h5>
-            <details>
-                <summary>A. Tipologie di Nodi</summary>
+                <h4>4.1. Assemblaggio Prompt Modulo Principi (se attivo):</h4>
+                <p>Questo prompt è orientato all'interpretazione e al ragionamento basato sui principi fondamentali.</p>
                 <pre>
-1. Norma
-   Descrizione: rappresenta atti normativi specifici...
-   Proprietà: node_id, estremi, fonte, titolo, descrizione, data_pubblicazione, data_entrata_in_vigore, data_abrogazione, ambito_di_applicazione, URN, revisioni_costituzionali.
+Sei MERL-T Principi, un LLM esperto nei fondamenti del diritto italiano.
+La tua missione è analizzare la query alla luce dei principi costituzionali, della giurisprudenza delle Corti Superiori (Costituzionale, Cassazione SU, CGUE, CEDU) e dei concetti giuridici fondamentali.
 
-2. Concetto Giuridico
-   Descrizione: rappresenta idee astratte o principi giuridici...
-   Proprietà: node_id, nome, definizione, ambito.
+Domanda Utente: "{query_normalizzata}"
 
-3. Soggetto Giuridico
-   Descrizione: Entità cui si applica il diritto...
-   Proprietà: node_id, nome, tipo, ruolo, qualifiche.
-
-4. Atto Giudiziario / Provvedimento
-   Descrizione: decisioni giurisprudenziali o atti amministrativi...
-   Proprietà: node_id, estremi, descrizione, organo_emittente, data, tipologia, materia, URN.
-
-6. Dottrina / Commentario (NB: Numero 5 mancante nel testo originale)
-   Descrizione: Testi e opinioni dottrinali...
-   Proprietà: node_id, titolo, autore, descrizione, data_pubblicazione, fonte.
-
-7. Procedura / Processo
-   Descrizione: Sequenze di atti regolati dalla norma...
-   Proprietà: node_id, nome, descrizione, ambito, tipologia.
-                </pre>
-             </details>
-            <details>
-                <summary>B. Tipologie di Relazioni</summary>
-                 <pre>
-1.  disciplina (Norma → Concetto)
-2.  applica_a (Norma → Soggetto)
-3.  interpreta (Atto Giudiziario → Norma)
-4.  commenta (Dottrina → Norma)
-5.  cita (Nodo → Nodo)
-6.  deroga_a / modifica (Norma → Norma)
-7.  relazione_concettuale (Concetto → Concetto)
-8.  emesso_da (Atto → Organo)
-9.  fonte (Norma → Fonte Diritto)
-10. prevede (Norma → Procedura)
-11. riguarda (Atto → Soggetto)
-                </pre>
-             </details>
-             <p>Recupero informazioni strutturate (<code>triplette_kg</code>).</p>
-
-            <h4>3.3. Recupero dinamico via API (se <code>execution_plan</code> include Modulo Regole e NER ha estratto <code>ENTITA_NORMA</code> o <code>ENTITA_SENTENZA</code> interna):</h4>
-             <ul>
-                <li>Chiamata a VisuaLexAPI (norme) e API Sentenze (corti interne).</li>
-                <li>Recupero testi specifici aggiornati (<code>testi_api</code>).</li>
-             </ul>
-
-             <p><strong>Output della fase:</strong> <code>contesto_recuperato</code> (Oggetto contenente <code>documenti_vettoriali</code>, <code>triplette_kg</code>, <code>testi_api</code>).</p>
-        </div>
-    </div>
-
-    <div id="modal-stage-4" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-4">&times;</span>
-            <h3>4. Costruzione dei prompt per LLM</h3>
-            <h4>4.1. Assemblaggio prompt:</h4>
-            <p>Costruzione dei prompt specifici per i moduli esperti.</p>
-            <h5>Prompt Principi:</h5>
-            <pre>
-Sei MERL-T Principi... Domanda: {query_normalizzata}
 --- CONTESTO DAL KNOWLEDGE GRAPH ---
-{triplette_kg relevantes}
+{sezioni rilevanti di triplette_kg formattate in linguaggio naturale o come tripletta}
 --- FINE CONTESTO KG ---
-Fornisci una spiegazione completa…
-            </pre>
-             <h5>Prompt Regole:</h5>
-             <pre>
-Sei MERL-T Regole... Domanda: {query_normalizzata}
+
+Istruzioni:
+1. Analizza la domanda identificando i principi giuridici sottostanti.
+2. Utilizza il contesto fornito dal Knowledge Graph per inquadrare la questione.
+3. Elabora una spiegazione completa e argomentata, facendo riferimento ai principi rilevanti e alle loro interconnessioni.
+4. Se necessario, menziona orientamenti giurisprudenziali consolidati delle Corti Superiori pertinenti ai principi discussi.
+5. Evita di fornire pareri legali specifici, ma concentrati sulla spiegazione dei principi applicabili.
+6. Struttura la risposta in modo chiaro e logico.
+
+Risposta:
+                </pre>
+
+                <h4>4.2. Assemblaggio Prompt Modulo Regole (se attivo):</h4>
+                 <p>Questo prompt è ottimizzato per l'applicazione di regole specifiche basandosi strettamente sul contesto fornito (approccio RAG).</p>
+                <pre>
+Sei MERL-T Regole, un LLM specializzato nell'applicazione del diritto italiano basato su fonti specifiche.
+La tua missione è rispondere alla domanda utilizzando ESCLUSIVAMENTE le informazioni fornite nel contesto sottostante. NON usare conoscenze esterne. Cita sempre la fonte per ogni affermazione fatta.
+
+Domanda Utente: "{query_normalizzata}"
+
 --- CONTESTO RECUPERATO ---
-[Fonte: API Normattiva - Art. X] {testo_api_norma}
-[Fonte: API Sentenze - Cass. Y] {testo_api_sentenza}
-[Fonte: DB Vettoriale - Manuale Z] {documento_vettoriale}
-[Fonte: KG] {triplette_kg}
+
+[Fonte: {metadati fonte API/DB/KG 1}]
+{testo_contesto_1}
+
+[Fonte: {metadati fonte API/DB/KG 2}]
+{testo_contesto_2}
+
+... (altri contesti recuperati) ...
+
 --- FINE CONTESTO ---
-Rispondi basandoti ESCLUSIVAMENTE sul contesto…
-             </pre>
-             <p><strong>Output della fase:</strong> <code>prompt_principi</code> (Stringa), <code>prompt_regole</code> (Stringa).</p>
+
+Istruzioni:
+1. Analizza attentamente la domanda utente.
+2. Identifica le informazioni pertinenti all'interno del CONTESTO RECUPERATO.
+3. Formula una risposta precisa e concisa basata SOLO sulle fonti fornite.
+4. Se il contesto non contiene informazioni sufficienti per rispondere, indicalo esplicitamente ("Il contesto fornito non contiene informazioni sufficienti per rispondere a questa domanda.").
+5. Per ogni parte significativa della risposta, cita la fonte specifica tra parentesi quadre (es. [Fonte: Art. 123 CC]).
+6. Non inventare informazioni o fare inferenze non direttamente supportate dal contesto.
+
+Risposta:
+                </pre>
+                <p><strong>Nota:</strong> I prompt sono esempi e vengono adattati dinamicamente in base alla query specifica e al contesto recuperato per massimizzare la pertinenza e l'efficacia.</p>
+                <p><strong>Output della fase:</strong> Stringhe <code>prompt_principi</code> (opzionale) e <code>prompt_regole</code> (opzionale), pronte per essere inviate ai rispettivi LLM.</p>
+            </div>
         </div>
     </div>
 
-    <div id="modal-stage-5" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-5">&times;</span>
-            <h3>5. Inferenza LLM (Moduli Esperti)</h3>
-            <h4>5.1. Esecuzione Modulo Principi (se richiesto da <code>execution_plan</code>):</h4>
-            <ul>
-                <li>Inferenza su Modulo Principi LLM (Componente sostituibile/aggiornabile - API/Locale+LoRA).</li>
-                 <li>Corpus fine-tuning: Manuali (materie 3.1), decisioni/ragionamenti Corti Superiori/Principi (Corte Costituzionale, CGUE, CEDU, etc.) o commentari su di esse.</li>
-                <li>Generazione <code>risposta_principi</code>.</li>
-            </ul>
-             <h4>5.2. Esecuzione Modulo Regole (se richiesto da <code>execution_plan</code>):</h4>
-             <ul>
-                <li>Inferenza su Modulo Regole LLM (Componente sostituibile/aggiornabile, ottimizzato per RAG).</li>
-                <li>Generazione <code>risposta_regole</code>.</li>
-             </ul>
-            <p><strong>Output della fase:</strong> <code>risposta_principi</code> (Stringa, opzionale), <code>risposta_regole</code> (Stringa, opzionale).</p>
+     <div id="modal-stage-5" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-5" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                 <button class="close-btn" data-target="modal-stage-5" aria-label="Chiudi Dettagli Fase 5">&times;</button>
+                <h3 id="modal-title-5"><i class="fa-solid fa-brain fa-fw" aria-hidden="true"></i> 5. Inferenza LLM (Esecuzione Moduli Esperti)</h3>
+                <p>In questa fase, i prompt costruiti vengono inviati ai rispettivi modelli LLM specializzati per la generazione delle risposte parziali.</p>
+
+                <h4>5.1. Esecuzione Modulo Principi LLM (se richiesto da <code>execution_plan</code>):</h4>
+                <ul>
+                    <li><i class="fa-solid fa-gears" aria-hidden="true"></i> Il <code>prompt_principi</code> viene inviato al Modulo Principi LLM.</li>
+                    <li><strong>Caratteristiche Modulo Principi:</strong>
+                        <ul>
+                           <li>Può essere un modello Foundation (es. GPT-4, Claude) accessibile via API o un modello open-source (es. Llama, Mixtral) fine-tuned specificamente.</li>
+                           <li>Corpus di Fine-Tuning: Manuali avanzati sulle materie fondamentali (vedi Allegato I), raccolte ragionate di decisioni e massime delle Corti Superiori (Corte Costituzionale, Cassazione Sezioni Unite, Consiglio di Stato Ad. Plenaria, CGUE, CEDU), trattati e commentari sui principi generali del diritto.</li>
+                           <li>Obiettivo: Capacità di ragionamento astratto, interpretazione sistematica, comprensione dei principi e della loro evoluzione giurisprudenziale.</li>
+                        </ul>
+                    </li>
+                    <li><i class="fa-solid fa-reply" aria-hidden="true"></i> Il modello genera la <code>risposta_principi</code>, che spiega il quadro giuridico fondamentale relativo alla query.</li>
+                </ul>
+
+                <h4>5.2. Esecuzione Modulo Regole LLM (se richiesto da <code>execution_plan</code>):</h4>
+                 <ul>
+                     <li><i class="fa-solid fa-gears" aria-hidden="true"></i> Il <code>prompt_regole</code> viene inviato al Modulo Regole LLM.</li>
+                     <li><strong>Caratteristiche Modulo Regole:</strong>
+                         <ul>
+                            <li>Ottimizzato per task di Retrieval-Augmented Generation (RAG) e Question Answering basato su contesto.</li>
+                            <li>Può essere un modello più leggero o specificamente fine-tuned per seguire strettamente le istruzioni del prompt e citare le fonti.</li>
+                            <li>Corpus di Fine-Tuning: Dati specifici per il RAG giuridico (coppie domanda-contesto-risposta con citazioni), normativa e giurisprudenza formattate per l'estrazione.</li>
+                            <li>Obiettivo: Precisione fattuale, aderenza al contesto fornito, corretta citazione delle fonti.</li>
+                         </ul>
+                     </li>
+                    <li><i class="fa-solid fa-reply" aria-hidden="true"></i> Il modello genera la <code>risposta_regole</code>, ancorata ai documenti specifici recuperati nella fase 3.</li>
+                 </ul>
+                 <p><strong>Nota sulla Sostituibilità:</strong> L'architettura MERL-T prevede che i modelli LLM sottostanti siano componenti sostituibili, permettendo aggiornamenti o l'uso di modelli diversi (proprietari o open-source) in base alle esigenze e alle disponibilità, mantenendo invariata la logica della pipeline.</p>
+                 <p><strong>Output della fase:</strong> Stringhe <code>risposta_principi</code> (opzionale) e <code>risposta_regole</code> (opzionale), contenenti le elaborazioni dei rispettivi moduli.</p>
+             </div>
         </div>
     </div>
 
-     <div id="modal-stage-6" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-6">&times;</span>
-            <h3>6. Sintesi e combinazione risposte (Sintetizzatore MoE Addestrabile)</h3>
-             <h4>6.1. Integrazione risultati:</h4>
-             <p>Il Sintetizzatore MoE Addestrabile riceve <code>risposta_principi</code>, <code>risposta_regole</code>, <code>query_normalizzata</code>.</p>
-            <h4>6.2. Logica di sintesi appresa:</h4>
-             <ul>
-                 <li>Se <code>execution_plan</code> era A o B, la risposta corrispondente viene selezionata.</li>
-                 <li>Se <code>execution_plan</code> era C, il modello Sintetizzatore, addestrato tramite RLCF su validazioni esperte, sceglie ed applica la migliore strategia di combinazione. I pesi di questo modello sono anch'essi parte del patrimonio intellettuale collettivo LAIBIT.</li>
-            </ul>
-             <p>Generazione <code>risposta_finale_provvisoria</code>.</p>
-             <p><strong>Output della fase:</strong> <code>risposta_finale_provvisoria</code> (Stringa).</p>
-        </div>
+     <div id="modal-stage-6" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-6" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                <button class="close-btn" data-target="modal-stage-6" aria-label="Chiudi Dettagli Fase 6">&times;</button>
+                <h3 id="modal-title-6"><i class="fa-solid fa-puzzle-piece fa-fw" aria-hidden="true"></i> 6. Sintesi e Combinazione Risposte (Sintetizzatore MoE Addestrabile)</h3>
+                <p>Questa fase integra le risposte parziali generate dai moduli esperti (Principi e/o Regole) per produrre una risposta coerente e completa, sempre sotto la guida di un modello addestrato dalla community.</p>
+
+                <h4>6.1. Integrazione Risultati:</h4>
+                <p>Il Sintetizzatore MoE Addestrabile riceve come input:</p>
+                <ul>
+                    <li><code>risposta_principi</code> (se generata)</li>
+                    <li><code>risposta_regole</code> (se generata)</li>
+                    <li><code>query_normalizzata</code> (per riferimento)</li>
+                    <li><code>execution_plan</code> (per conoscere quali moduli sono stati attivati)</li>
+                </ul>
+
+                <h4>6.2. Logica di Sintesi Appresa (RLCF):</h4>
+                <ul>
+                    <li><strong>Selezione Diretta:</strong> Se l'<code>execution_plan</code> prevedeva l'attivazione di un solo modulo (Piano A o B), la risposta corrispondente viene selezionata come <code>risposta_finale_provvisoria</code>.</li>
+                    <li><strong>Combinazione Intelligente (Piano C):</strong> Se entrambi i moduli sono stati attivati, il modello Sintetizzatore entra in gioco. Anche questo è un modello "gating" addestrato tramite RLCF su esempi validati da esperti giuridici. Impara a:
+                        <ul>
+                           <li>Identificare sovrapposizioni o potenziali contraddizioni tra <code>risposta_principi</code> e <code>risposta_regole</code>.</li>
+                           <li>Stabilire la gerarchia tra principi generali e regole specifiche nel contesto della query.</li>
+                           <li>Scegliere la strategia di combinazione migliore (es. usare la risposta principi come introduzione e la risposta regole per i dettagli applicativi; integrare le due risposte; evidenziare eventuali tensioni interpretative).</li>
+                           <li>Assicurare che le citazioni delle fonti siano mantenute e correttamente attribuite.</li>
+                        </ul>
+                    </li>
+                     <li>I pesi e la logica di questo Sintetizzatore rappresentano un altro asset intellettuale collettivo di LAIBIT, garantendo che la combinazione delle risposte segua criteri giuridicamente solidi e approvati dalla community.</li>
+                </ul>
+                <p>Il Sintetizzatore genera la <code>risposta_finale_provvisoria</code>.</p>
+                <p><strong>Output della fase:</strong> Stringa <code>risposta_finale_provvisoria</code>, risultato dell'integrazione (o selezione) delle risposte parziali.</p>
+            </div>
+         </div>
     </div>
 
-     <div id="modal-stage-7" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-target="modal-stage-7">&times;</span>
-            <h3>7. Post-processing e output finale</h3>
-             <h4>7.1. Formattazione:</h4>
-             <p>Formattazione della <code>risposta_finale_provvisoria</code>.</p>
-            <h4>7.2. Tracking e citazione fonti:</h4>
-            <ul>
-                <li>Verifica presenza e chiarezza citazioni.</li>
-                 <li><strong>Cruciale:</strong> Mantenimento metadati di provenienza per ogni frammento generato (dal KG, DB Vettoriale, API, Modulo Principi), fondamentale per trasparenza, validazione RLCF e modelli EaaS/attribuzione.</li>
-            </ul>
-            <h4>7.3. Filtri di sicurezza/qualità:</h4>
-            <p>Applicazione filtri finali.</p>
-             <h4>7.4. Generazione output:</h4>
-             <p>Produzione della <code>risposta_finale</code>.</p>
-             <p><strong>Output della fase:</strong> <code>risposta_finale</code> (Stringa).</p>
+     <div id="modal-stage-7" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-7" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" tabindex="-1">
+                <button class="close-btn" data-target="modal-stage-7" aria-label="Chiudi Dettagli Fase 7">&times;</button>
+                <h3 id="modal-title-7"><i class="fa-solid fa-file-export fa-fw" aria-hidden="true"></i> 7. Post-processing e Output Finale</h3>
+                <p>Questa è l'ultima fase prima di presentare la risposta all'utente. Applica controlli di qualità finali, formatta l'output e assicura la tracciabilità.</p>
+
+                <h4>7.1. Formattazione:</h4>
+                <p>La <code>risposta_finale_provvisoria</code> viene formattata per la leggibilità (es. markdown, paragrafi, elenchi puntati) in base al canale di output (web, API).</p>
+
+                <h4>7.2. Tracking e Citazione Fonti:</h4>
+                <ul>
+                     <li><strong>Verifica Citazioni:</strong> Controllo automatico per assicurare che le affermazioni derivanti dal Modulo Regole contengano le citazioni delle fonti [Fonte: ...] come richiesto nel prompt.</li>
+                     <li><strong>Tracciabilità dei Metadati:</strong> Fondamentale. Il sistema deve mantenere internamente i metadati associati a ogni frammento della risposta finale, indicando da quale fonte primaria (KG, DB Vettoriale, API specifica) o modulo LLM (Principi, Regole) proviene. Questa tracciabilità è essenziale per:
+                        <ul>
+                            <li>La trasparenza verso l'utente.</li>
+                            <li>Il processo di validazione RLCF (permettere agli esperti di verificare le basi della risposta).</li>
+                            <li>Potenziali modelli di attribuzione o "Expertise as a Service" (EaaS) futuri.</li>
+                            <li>Audit e debugging.</li>
+                        </ul>
+                     </li>
+                     <li><em>Opzionale:</em> Presentazione visiva delle fonti all'utente (es. tooltip, sezione riferimenti).</li>
+                </ul>
+
+                <h4>7.3. Filtri di Sicurezza e Qualità:</h4>
+                 <ul>
+                     <li>Applicazione di filtri per rilevare contenuti inappropriati, bias, o informazioni potenzialmente dannose (anche se i prompt mirano a prevenirli).</li>
+                     <li>Controllo di coerenza interna della risposta finale.</li>
+                     <li>Eventuali filtri basati su policy specifiche (es. non fornire pareri legali diretti).</li>
+                 </ul>
+
+                <h4>7.4. Generazione Output Finale:</h4>
+                <p>Produzione della <code>risposta_finale</code> formattata e validata, pronta per essere mostrata all'utente.</p>
+                <p><strong>Output della fase (e della pipeline):</strong> Stringa <code>risposta_finale</code> presentata all'utente, potenzialmente accompagnata da metadati sulle fonti utilizzate.</p>
+             </div>
         </div>
     </div>
-
     <footer>
         <div class="container">
-            <p>&copy; <span id="current-year"></span> Progetto LAIBIT & MERL-T. Tutti i diritti riservati.</p>
+            <p>&copy; <span id="current-year"></span> Progetto LAIBIT & MERL-T. Iniziativa per un'AI giuridica responsabile. Tutti i diritti riservati.</p>
             </div>
     </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Inizializza Animate On Scroll (AOS)
-            AOS.init({
-                duration: 800, // Durata animazione
-                once: true, // Anima solo una volta
-                offset: 50, // Offset (in px) prima che l'animazione inizi
-            });
+            // --- Gestione Navbar Scroll ---
+            const navbar = document.getElementById('main-navbar');
+            if (navbar) {
+                const scrollThreshold = 50; // Pixels to scroll before changing navbar style
+                const addScrolledClass = () => navbar.classList.add('scrolled');
+                const removeScrolledClass = () => navbar.classList.remove('scrolled');
 
-            // --- Gestione Navbar ---
-            const navbar = document.querySelector('.navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) { // Cambia dopo 50px di scroll
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > scrollThreshold) {
+                        addScrolledClass();
+                    } else {
+                        removeScrolledClass();
+                    }
+                }, { passive: true }); // Use passive listener for performance
+
+                // Initial check in case page loads already scrolled
+                if (window.scrollY > scrollThreshold) {
+                     addScrolledClass();
                 }
-            });
+            }
 
             // --- Gestione Menu Hamburger (Mobile) ---
             const hamburger = document.getElementById('hamburger-menu');
-            const navMenu = document.querySelector('.nav-menu');
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            // Chiudi il menu mobile quando si clicca un link
-            const navLinks = document.querySelectorAll('.nav-menu a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const isMobileMenuVisible = window.getComputedStyle(hamburger).display !== 'none';
-                    if (isMobileMenuVisible && navMenu.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                    }
+            const navMenu = document.getElementById('main-menu');
+
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isActive = hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('is-active');
+                    hamburger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+                    document.body.classList.toggle('menu-open', isActive); // Blocca scroll body
                 });
-            });
 
-            // --- Gestione Modali Pipeline ---
+                // Chiudi il menu mobile quando si clicca un link
+                const navLinks = navMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                         if (navMenu.classList.contains('is-active')) {
+                            hamburger.classList.remove('active');
+                            navMenu.classList.remove('is-active');
+                            hamburger.setAttribute('aria-expanded', 'false');
+                            document.body.classList.remove('menu-open');
+                         }
+                    });
+                });
+
+                 // Chiudi il menu mobile premendo ESC
+                window.addEventListener('keydown', (event) => {
+                     if (event.key === 'Escape' && navMenu.classList.contains('is-active')) {
+                         hamburger.click(); // Simula click per chiudere
+                     }
+                });
+            }
+
+
+            // --- Animazioni On Scroll (Intersection Observer) ---
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            if ("IntersectionObserver" in window) {
+                 const observerOptions = {
+                     root: null, // relative to document viewport
+                     rootMargin: '0px',
+                     threshold: 0.1 // trigger when 10% of the element is visible
+                 };
+
+                 const observerCallback = (entries, observer) => {
+                     entries.forEach(entry => {
+                         if (entry.isIntersecting) {
+                             // Use requestAnimationFrame for smoother start
+                             requestAnimationFrame(() => {
+                                entry.target.classList.add('is-visible');
+                             });
+                             // Optional: unobserve after animation to save resources
+                             observer.unobserve(entry.target);
+                         }
+                     });
+                 };
+
+                 const animationObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+                 animatedElements.forEach(el => {
+                    // Apply delay if data-delay attribute exists
+                    const delay = el.getAttribute('data-delay');
+                    if (delay) {
+                        el.style.transitionDelay = `${delay}ms`;
+                    }
+                    animationObserver.observe(el);
+                 });
+            } else {
+                 // Fallback for older browsers: just make elements visible
+                 animatedElements.forEach(el => el.classList.add('is-visible'));
+            }
+
+
+             // --- Gestione Modali Pipeline (Migliorata) ---
             const modalBtns = document.querySelectorAll('.details-btn');
-            const closeBtns = document.querySelectorAll('.modal .close-btn');
             const modals = document.querySelectorAll('.modal');
+            const closeBtns = document.querySelectorAll('.modal .close-btn');
+            let previouslyFocusedElement = null; // Per ripristinare focus
 
-            // Apri modale
+            const openModal = (modal) => {
+                if (!modal) return;
+                previouslyFocusedElement = document.activeElement; // Salva focus corrente
+                modal.setAttribute('aria-hidden', 'false');
+                modal.classList.add('is-visible');
+                document.body.style.overflow = 'hidden'; // Blocca scroll body
+
+                // Focus sul contenuto del modale (o sul primo elemento focusabile)
+                const focusableContent = modal.querySelector('.modal-content');
+                if (focusableContent) {
+                    // Use timeout to ensure transition finished before focusing
+                    setTimeout(() => focusableContent.focus(), 10);
+                }
+                // Setup focus trap
+                setupFocusTrap(modal);
+            };
+
+            const closeModal = (modal) => {
+                 if (!modal || !modal.classList.contains('is-visible')) return;
+                modal.setAttribute('aria-hidden', 'true');
+                modal.classList.remove('is-visible');
+                document.body.style.overflow = ''; // Ripristina scroll body
+
+                // Ripristina focus all'elemento che ha aperto il modale
+                if (previouslyFocusedElement) {
+                    previouslyFocusedElement.focus();
+                    previouslyFocusedElement = null;
+                }
+                // Remove focus trap listeners
+                removeFocusTrap(modal);
+            };
+
+            // Apri modale al click del bottone
             modalBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const targetModalId = btn.getAttribute('data-target');
                     const targetModal = document.getElementById(targetModalId);
-                    if (targetModal) {
-                        targetModal.classList.add('show'); // Usa classe per animazione fade-in
-                    }
+                    openModal(targetModal);
                 });
             });
 
@@ -1161,33 +1767,77 @@ Rispondi basandoti ESCLUSIVAMENTE sul contesto…
                 btn.addEventListener('click', () => {
                     const targetModalId = btn.getAttribute('data-target');
                     const targetModal = document.getElementById(targetModalId);
-                     if (targetModal) {
-                        targetModal.classList.remove('show');
-                    }
+                    closeModal(targetModal);
                 });
             });
 
-            // Chiudi modale cliccando fuori dal contenuto
-             window.addEventListener('click', (event) => {
-                modals.forEach(modal => {
-                     // Verifica se il modale è visibile e se il click è direttamente sullo sfondo del modale
-                     if (modal.classList.contains('show') && event.target === modal) {
-                        modal.classList.remove('show');
-                    }
+            // Chiudi modale cliccando sullo sfondo (dialog)
+            modals.forEach(modal => {
+                 modal.addEventListener('click', (event) => {
+                     // Close only if clicking directly on the modal background (not content)
+                     if (event.target === modal) {
+                        closeModal(modal);
+                     }
                  });
             });
 
-             // Chiudi modale premendo ESC
-             window.addEventListener('keydown', (event) => {
+            // Chiudi modale premendo ESC
+            window.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
-                    modals.forEach(modal => {
-                        if (modal.classList.contains('show')) {
-                            modal.classList.remove('show');
-                        }
-                    });
+                    const openModalElement = document.querySelector('.modal.is-visible');
+                    if (openModalElement) {
+                        closeModal(openModalElement);
+                    }
                 }
-             });
+            });
 
+
+             // --- Basic Focus Trap for Modals ---
+            const focusableElementsString = 'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            let focusTrapListeners = []; // Store listeners to remove them later
+
+            function setupFocusTrap(modal) {
+                const focusableElements = modal.querySelectorAll(focusableElementsString);
+                if (focusableElements.length === 0) return;
+
+                const firstFocusableElement = focusableElements[0];
+                const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+                // Focus sul primo elemento all'apertura (già gestito in openModal)
+                // firstFocusableElement.focus();
+
+                const focusTrapHandler = (event) => {
+                    if (event.key !== 'Tab') return;
+
+                    const currentModal = document.querySelector('.modal.is-visible');
+                    if (!currentModal || !currentModal.contains(document.activeElement)) return; // Exit if focus is outside modal
+
+                    if (event.shiftKey) { // Shift + Tab
+                        if (document.activeElement === firstFocusableElement) {
+                            lastFocusableElement.focus();
+                            event.preventDefault();
+                        }
+                    } else { // Tab
+                        if (document.activeElement === lastFocusableElement) {
+                            firstFocusableElement.focus();
+                            event.preventDefault();
+                        }
+                    }
+                };
+
+                modal.addEventListener('keydown', focusTrapHandler);
+                // Store the listener reference to remove it later
+                focusTrapListeners.push({ modal, handler: focusTrapHandler });
+            }
+
+            function removeFocusTrap(modal) {
+                 const listenerIndex = focusTrapListeners.findIndex(item => item.modal === modal);
+                 if (listenerIndex > -1) {
+                     const { handler } = focusTrapListeners[listenerIndex];
+                     modal.removeEventListener('keydown', handler);
+                     focusTrapListeners.splice(listenerIndex, 1); // Remove from stored listeners
+                 }
+            }
 
             // --- Aggiorna anno nel footer ---
             const currentYearSpan = document.getElementById('current-year');
@@ -1197,5 +1847,6 @@ Rispondi basandoti ESCLUSIVAMENTE sul contesto…
 
         });
     </script>
-    </body>
+
+</body>
 </html>
