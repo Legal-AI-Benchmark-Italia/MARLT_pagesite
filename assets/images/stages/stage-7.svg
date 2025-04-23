@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="300" fill="#f1f3f5" rx="8" ry="8"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Montserrat, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#0A2342">
+    Post-processing e Output Finale
+  </text>
+  
+  <!-- Input from Previous Stage -->
+  <rect x="100" y="50" width="400" height="40" rx="5" ry="5" fill="#ffffff" stroke="#4A90E2" stroke-width="2"/>
+  <text x="300" y="75" font-family="Open Sans, sans-serif" font-size="12" text-anchor="middle" fill="#495057">
+    Risposta Finale Provvisoria
+  </text>
+  
+  <!-- Processing Steps -->
+  <g transform="translate(300, 120)">
+    <!-- Step 1: Formattazione -->
+    <rect x="-200" y="0" width="120" height="40" rx="5" ry="5" fill="#ffffff" stroke="#0077CC" stroke-width="1"/>
+    <text x="-140" y="25" font-family="Open Sans, sans-serif" font-size="12" text-anchor="middle" fill="#0A2342">
+      Formattazione
+    </text>
+    
+    <!-- Step 2: Tracking e Citazione -->
+    <rect x="-60" y="0" width="120" height="40" rx="5" ry="5" fill="#ffffff" stroke="#0077CC" stroke-width="1"/>
+    <text x="0" y="25" font-family="Open Sans, sans-serif" font-size="12" text-anchor="middle" fill="#0A2342">
+      Tracking Fonti
+    </text>
+    
+    <!-- Step 3: Filtri Sicurezza -->
+    <rect x="80" y="0" width="120" height="40" rx="5" ry="5" fill="#ffffff" stroke="#0077CC" stroke-width="1"/>
+    <text x="140" y="25" font-family="Open Sans, sans-serif" font-size="12" text-anchor="middle" fill="#0A2342">
+      Filtri Sicurezza
+    </text>
+  </g>
+  
+  <!-- Flow Arrows -->
+  <path d="M300,90 L300,110" stroke="#0077CC" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M100,120 L220,120" stroke="#0077CC" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M220,120 L360,120" stroke="#0077CC" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M360,120 L500,120" stroke="#0077CC" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M300,140 L300,170" stroke="#0077CC" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Final Output -->
+  <rect x="100" y="170" width="400" height="110" rx="8" ry="8" fill="#ffffff" stroke="#0A2342" stroke-width="2"/>
+  <text x="300" y="190" font-family="Montserrat, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0A2342">
+    Risposta Finale
+  </text>
+  
+  <!-- Sample Formatted Response -->
+  <text x="120" y="215" font-family="Open Sans, sans-serif" font-size="11" fill="#495057">
+    <tspan x="120" dy="0">La simulazione del contratto è un istituto giuridico che consente alle parti</tspan>
+    <tspan x="120" dy="16">di creare un'apparenza contrattuale diversa dalla realtà dei loro accordi.</tspan>
+    <tspan x="120" dy="16">Secondo l'<tspan font-weight="bold">Art. 1414 c.c.</tspan>, il contratto simulato non produce</tspan>
+    <tspan x="120" dy="16">effetti tra le parti, mentre ha effetto il contratto dissimulato.</tspan>
+  </text>
+  
+  <!-- Citation Box -->
+  <rect x="100" y="260" width="400" height="30" rx="5" ry="5" fill="#e9ecef" stroke="#0077CC" stroke-width="1"/>
+  <text x="120" y="280" font-family="Open Sans, sans-serif" font-size="10" fill="#495057">
+    Fonti: [Art. 1414 c.c.] [Cass. Civ. 13455/2010] [Concetto KG: simulazione]
+  </text>
+  
+  <!-- Arrow Definition -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0077CC"/>
+    </marker>
+  </defs>
+</svg>
