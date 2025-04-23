@@ -1,0 +1,228 @@
+/* 
+ * LAIBIT & MERL-T Features Section CSS
+ * Stili per la sezione delle caratteristiche
+ */
+
+/* Features Section Base */
+#soluzione {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 30px;
+    margin-top: var(--space-12);
+}
+
+/* Feature Card */
+.feature-card {
+    background-color: var(--white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    padding: var(--card-padding);
+    text-align: center;
+    transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: var(--secondary-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-10px);
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Feature Icon */
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius-circle);
+    margin-bottom: var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 119, 204, 0.3);
+    flex-shrink: 0;
+    transition: var(--transition-normal);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+    background-color: var(--accent-color);
+}
+
+/* Feature Title */
+.feature-card h3 {
+    margin-bottom: var(--space-4);
+    color: var(--primary-color);
+    font-size: var(--font-size-xl);
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover h3 {
+    color: var(--secondary-color);
+}
+
+/* Feature Description */
+.feature-card p {
+    font-size: var(--font-size-base);
+    flex-grow: 1;
+    color: var(--text-medium);
+    margin-bottom: var(--space-4);
+}
+
+/* Feature Link */
+.feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    transition: var(--transition-fast);
+    margin-top: var(--space-3);
+    position: relative;
+}
+
+.feature-link::after {
+    content: '→';
+    font-size: 1.1em;
+    transition: transform 0.2s ease;
+}
+
+.feature-link:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.feature-link:hover::after {
+    transform: translateX(4px);
+}
+
+/* Architecture Preview */
+.architecture-preview {
+    margin-top: var(--space-16);
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+}
+
+.architecture-preview h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    color: var(--primary-color);
+}
+
+.architecture-preview h3 i {
+    color: var(--secondary-color);
+}
+
+.architecture-container {
+    position: relative;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-top: var(--space-4);
+    border: 1px solid var(--border-color);
+    background-color: var(--light-gray-1);
+}
+
+.architecture-diagram {
+    width: 100%;
+    min-height: 300px;
+    object-fit: contain;
+}
+
+.architecture-overlay {
+    position: absolute;
+    bottom: var(--space-4);
+    right: var(--space-4);
+}
+
+.zoom-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-circle);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-fast);
+    border: none;
+    cursor: pointer;
+}
+
+.zoom-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--white);
+    color: var(--secondary-color);
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .feature-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: var(--space-4);
+    }
+    
+    .feature-card h3 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .architecture-preview {
+        padding: var(--space-4);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .feature-card:hover,
+    .feature-card:hover .feature-icon,
+    .zoom-btn:hover,
+    .feature-link:hover::after {
+        transform: none;
+    }
+    
+    .feature-card::before {
+        transition: none;
+    }
+}

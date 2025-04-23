@@ -1,0 +1,227 @@
+/* 
+ * LAIBIT & MERL-T Importance Section CSS
+ * Stili per la sezione "Perché Noi"
+ */
+
+/* Importance Section Base */
+#importanza {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Importance Grid */
+.importance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 30px;
+    margin: var(--space-12) 0;
+}
+
+/* Importance Items */
+.importance-item {
+    border-left: 6px solid var(--secondary-color);
+    padding: var(--space-6);
+    background-color: var(--white);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.importance-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.importance-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(8px) scale(1.02);
+    border-left-color: var(--accent-color);
+}
+
+.importance-item:hover::before {
+    opacity: 1;
+}
+
+/* Importance Headers */
+.importance-item h4 {
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+    transition: color 0.3s ease;
+}
+
+.importance-item:hover h4 {
+    color: var(--secondary-color);
+}
+
+.importance-item h4 i {
+    color: var(--secondary-color);
+    font-size: 1em;
+    transition: transform 0.3s ease;
+}
+
+.importance-item:hover h4 i {
+    transform: translateY(-3px);
+    color: var(--accent-color);
+}
+
+/* Importance Content */
+.importance-item p {
+    font-size: var(--font-size-base);
+    color: var(--text-medium);
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ecosystem Diagram */
+.ecosystem-diagram {
+    margin-top: var(--space-12);
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.ecosystem-diagram h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    color: var(--primary-color);
+}
+
+.ecosystem-diagram h3 i {
+    color: var(--secondary-color);
+}
+
+.ecosystem-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-top: var(--space-6);
+}
+
+.ecosystem-core,
+.ecosystem-components {
+    flex: 1;
+    min-width: 250px;
+    padding: var(--space-6);
+    border-radius: var(--border-radius-md);
+    background-color: var(--light-gray-1);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-normal);
+}
+
+.ecosystem-core {
+    background-color: rgba(0, 119, 204, 0.1);
+    border-color: var(--secondary-color);
+}
+
+.ecosystem-core:hover,
+.ecosystem-components:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.ecosystem-core h4,
+.ecosystem-components h4 {
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-lg);
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.ecosystem-core:hover h4 {
+    color: var(--secondary-color);
+}
+
+.ecosystem-components:hover h4 {
+    color: var(--accent-color);
+}
+
+.ecosystem-core ul,
+.ecosystem-components ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.ecosystem-core li,
+.ecosystem-components li {
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-medium);
+    transition: transform 0.3s ease;
+}
+
+.ecosystem-core li:hover,
+.ecosystem-components li:hover {
+    transform: translateX(5px);
+    color: var(--text-dark);
+}
+
+.ecosystem-core li i,
+.ecosystem-components li i {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.ecosystem-core li:hover i,
+.ecosystem-components li:hover i {
+    transform: scale(1.1);
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .ecosystem-container {
+        flex-direction: column;
+        gap: var(--space-6);
+    }
+}
+
+@media (max-width: 768px) {
+    .importance-item {
+        padding: var(--space-4);
+    }
+    
+    .ecosystem-diagram {
+        padding: var(--space-4);
+    }
+    
+    .ecosystem-core,
+    .ecosystem-components {
+        padding: var(--space-4);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .importance-item:hover,
+    .ecosystem-core:hover,
+    .ecosystem-components:hover,
+    .importance-item:hover h4 i,
+    .ecosystem-core li:hover,
+    .ecosystem-components li:hover,
+    .ecosystem-core li:hover i,
+    .ecosystem-components li:hover i {
+        transform: none;
+    }
+}

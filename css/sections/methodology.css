@@ -1,0 +1,244 @@
+/* 
+ * LAIBIT & MERL-T Methodology Section CSS
+ * Stili per la sezione del metodo RLCF
+ */
+
+/* Methodology Section Base */
+#metodo {
+    position: relative;
+    overflow: hidden;
+}
+
+/* RLCF Diagram Container */
+.rlcf-diagram-container {
+    margin: var(--space-12) 0;
+    padding: var(--space-6);
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* RLCF Interactive Diagram */
+.rlcf-diagram {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+}
+
+/* RLCF Component */
+.rlcf-component {
+    width: 180px;
+    height: 180px;
+    background-color: var(--light-gray-1);
+    border-radius: var(--border-radius-circle);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-4);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.rlcf-component::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(74, 144, 226, 0.2) 0%, rgba(74, 144, 226, 0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.rlcf-component:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+    background-color: var(--white);
+    border-color: var(--secondary-color);
+}
+
+.rlcf-component:hover::before {
+    opacity: 1;
+}
+
+/* RLCF Icon */
+.rlcf-icon {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: var(--space-4);
+    transition: transform 0.3s ease;
+}
+
+.rlcf-component:hover .rlcf-icon {
+    transform: scale(1.1) translateY(-5px);
+}
+
+/* RLCF Component Title */
+.rlcf-component h4 {
+    font-size: var(--font-size-base);
+    color: var(--primary-color);
+    margin-bottom: 0;
+    transition: color 0.3s ease;
+}
+
+.rlcf-component:hover h4 {
+    color: var(--secondary-color);
+}
+
+/* RLCF Arrow */
+.rlcf-arrow {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin: 0 var(--space-2);
+    transition: transform 0.3s ease;
+}
+
+.rlcf-arrow.circular {
+    font-size: 2rem;
+    margin-top: var(--space-6);
+    color: var(--secondary-color);
+    opacity: 0.7;
+    animation: rotate 8s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* KG Visualization */
+.kg-visualization {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+}
+
+.kg-visualization:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.kg-3d-image {
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+}
+
+.kg-visualization:hover .kg-3d-image {
+    transform: scale(1.05);
+}
+
+.kg-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--space-4);
+    background: linear-gradient(to top, rgba(10, 35, 66, 0.8), transparent);
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.kg-visualization:hover .kg-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kg-explore-btn {
+    padding: var(--space-2) var(--space-6);
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius-pill);
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.kg-explore-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .rlcf-diagram {
+        flex-direction: column;
+    }
+    
+    .rlcf-component {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .rlcf-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .rlcf-arrow.circular {
+        transform: none;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .rlcf-diagram-container {
+        padding: var(--space-4);
+    }
+    
+    .rlcf-component {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .rlcf-icon {
+        font-size: 2.5rem;
+    }
+    
+    .kg-visualization {
+        min-height: 250px;
+    }
+    
+    .kg-3d-image {
+        min-height: 250px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rlcf-component:hover,
+    .kg-visualization:hover {
+        transform: none;
+    }
+    
+    .rlcf-component:hover .rlcf-icon {
+        transform: none;
+    }
+    
+    .rlcf-arrow.circular {
+        animation: none;
+    }
+}
