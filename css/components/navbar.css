@@ -1,0 +1,332 @@
+/* 
+ * LAIBIT & MERL-T Navbar CSS
+ * Styles for the main navigation
+ */
+
+/* Navbar Container */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    z-index: var(--z-index-sticky);
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                backdrop-filter 0.3s ease,
+                height 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar State: Scrolled */
+.navbar.scrolled {
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: none;
+}
+
+/* Navbar State: Transparent (Optional) */
+.navbar.transparent {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.navbar.transparent .nav-logo,
+.navbar.transparent .nav-menu a {
+    color: var(--white);
+}
+
+.navbar.transparent .hamburger span {
+    background-color: var(--white);
+}
+
+.navbar.transparent.scrolled {
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar.transparent.scrolled .nav-logo,
+.navbar.transparent.scrolled .nav-menu a {
+    color: var(--text-dark);
+}
+
+.navbar.transparent.scrolled .hamburger span {
+    background-color: var(--primary-color);
+}
+
+/* Navbar Container */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.nav-logo img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.nav-logo:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transform: scale(1.03);
+}
+
+/* Navigation Menu */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    position: relative;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-2) 0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: var(--transition-fast);
+}
+
+.nav-menu a i {
+    color: var(--secondary-color);
+    font-size: 0.9em;
+    transition: var(--transition-fast);
+}
+
+/* Highlight current section */
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.nav-menu a:hover i,
+.nav-menu a.active i {
+    color: var(--accent-color);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: var(--z-index-dropdown);
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger Animation */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* Optional: Navbar CTA Button */
+.navbar-cta {
+    margin-left: var(--space-4);
+}
+
+/* Dropdown Menu (Optional) */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-2);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    z-index: var(--z-index-dropdown);
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background-color: var(--white);
+    border-top: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+}
+
+.nav-dropdown-menu li {
+    margin: 0;
+}
+
+.nav-dropdown-menu a {
+    padding: var(--space-2) var(--space-4);
+    color: var(--text-dark);
+    display: block;
+    white-space: nowrap;
+    border-radius: var(--border-radius-sm);
+}
+
+.nav-dropdown-menu a:hover {
+    background-color: var(--light-gray-1);
+    color: var(--secondary-color);
+}
+
+.nav-dropdown-menu a::after {
+    display: none;
+}
+
+/* Mobile Navigation Menu */
+@media (max-width: 992px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        flex-direction: column;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--white);
+        box-shadow: var(--shadow-lg);
+        padding: calc(var(--navbar-height) + var(--space-4)) var(--space-4) var(--space-4);
+        gap: var(--space-6);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        overflow-y: auto;
+        z-index: var(--z-index-fixed);
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    
+    .nav-menu a {
+        font-size: var(--font-size-lg);
+    }
+    
+    .nav-menu a::after {
+        display: none;
+    }
+    
+    body.menu-open {
+        overflow: hidden;
+    }
+    
+    /* Mobile submenu */
+    .nav-dropdown-menu {
+        position: static;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding: 0;
+        margin-top: var(--space-2);
+        margin-left: var(--space-4);
+        border-left: 2px solid var(--border-color);
+        border-radius: 0;
+        min-width: auto;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .nav-dropdown-menu::before {
+        display: none;
+    }
+    
+    .nav-dropdown.active .nav-dropdown-menu {
+        max-height: 500px;
+    }
+    
+    .navbar-cta {
+        margin-left: 0;
+        margin-top: var(--space-4);
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-logo {
+        font-size: var(--font-size-lg);
+    }
+    
+    .nav-logo img {
+        height: 32px;
+        width: 32px;
+    }
+}

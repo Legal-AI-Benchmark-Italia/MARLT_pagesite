@@ -1,0 +1,178 @@
+/* 
+ * LAIBIT & MERL-T Reset CSS
+ * A modern CSS reset based on modern best practices
+ */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove default margin and padding */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: var(--line-height-normal);
+    font-family: var(--font-family-secondary);
+    color: var(--text-dark);
+    background-color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Set base font size to user's preference */
+html {
+    font-size: 100%; /* 1rem = 16px typically */
+    scroll-padding-top: var(--navbar-height); /* Account for fixed navbar */
+    scroll-behavior: smooth;
+}
+
+/* Remove list styles */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Remove default styles on links */
+a {
+    text-decoration: none;
+    color: var(--text-link);
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--text-link-hover);
+}
+
+/* Make images easier to work with */
+img,
+svg,
+picture,
+video {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* Remove default button styles */
+button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+/* Set default button hover style */
+button:hover {
+    cursor: pointer;
+}
+
+/* Set default form element styles */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+/* Remove default field outline styles */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Ensure proper rendering and touch zooming for iOS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Normalize focus styles */
+:focus {
+    outline: 0;
+}
+
+:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Modern accessibility helper classes */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.sr-only-focusable:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
