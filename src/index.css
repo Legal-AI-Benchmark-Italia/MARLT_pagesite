@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Palette cromatica principale */
+  --primary-color: #1a5276;
+  --primary-light: #2980b9;
+  --primary-dark: #154360;
+  --secondary-color: #f39c12;
+  --secondary-light: #f5b041;
+  --secondary-dark: #d68910;
+  
+  /* Colori neutri */
+  --neutral-100: #f8f9fa;
+  --neutral-200: #e9ecef;
+  --neutral-300: #dee2e6;
+  --neutral-400: #ced4da;
+  --neutral-500: #adb5bd;
+  --neutral-600: #6c757d;
+  --neutral-700: #495057;
+  --neutral-800: #343a40;
+  --neutral-900: #212529;
+  
+  /* Colori semantici */
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #c0392b;
+  --info: #3498db;
+}
+
+/* Animazioni */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibilità */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 2rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Touch targets */
+@media (max-width: 768px) {
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  button, 
+  a, 
+  input[type="button"], 
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High contrast mode */
+.high-contrast {
+  --primary-color: #0056b3;
+  --primary-light: #007bff;
+  --primary-dark: #004085;
+  --secondary-color: #e67e00;
+  --secondary-light: #ff9800;
+  --secondary-dark: #cc6d00;
+  
+  --neutral-100: #ffffff;
+  --neutral-900: #000000;
+  
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.high-contrast button,
+.high-contrast .btn {
+  border: 2px solid currentColor;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Font size controls */
+.font-size-large {
+  font-size: 1.2em;
+}
+
+.font-size-larger {
+  font-size: 1.4em;
+}
+
+/* Dyslexia friendly font */
+.dyslexia-font {
+  font-family: 'OpenDyslexic', sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+}
