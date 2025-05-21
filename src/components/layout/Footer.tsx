@@ -1,4 +1,5 @@
 import { Twitter, Linkedin, Github, Mail } from 'lucide-react';
+import logo from '../../assets/images/logoLAIBIT.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,9 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-primary font-bold text-lg">L</span>
-              </div>
+              <img src={logo} alt="LAIBIT Logo" className="w-10 h-10 bg-white rounded-full object-contain" />
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-white">LAIBIT</span>
                 <span className="text-xs text-slate-300">Legal AI Benchmark Italia</span>

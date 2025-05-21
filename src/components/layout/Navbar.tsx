@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Search, Globe } from 'lucide-react';
 import { Button } from '../ui/button';
+import logo from '../../assets/images/logoLAIBIT.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,9 +34,7 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 shadow-md backdrop-blur-sm py-2' : 'bg-transparent py-4'}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a href="#" className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-xl">L</span>
-          </div>
+          <img src={logo} alt="LAIBIT Logo" className="w-12 h-12" />
           <div className="flex flex-col">
             <span className="font-bold text-xl text-primary">LAIBIT</span>
             <span className="text-xs text-muted-foreground">Legal AI Benchmark Italia</span>
